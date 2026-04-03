@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Partner Dashboard | Onco-Ally</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    :root { --bg:#0a0f1e; --surface2:rgba(255,255,255,0.04); --border:rgba(255,255,255,0.08); --accent:#00BCD4; --text-muted:rgba(255,255,255,0.5); }
+    body { font-family:'Inter',sans-serif; background:var(--bg); color:#fff; line-height:1.6; }
+    header { background:rgba(10,15,30,0.95); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); padding:0.85em 2em; position:sticky; top:0; z-index:100; display:flex; align-items:center; justify-content:space-between; }
+    .logo-text { font-size:1.15em; font-weight:700; background:linear-gradient(90deg,#fff,#00BCD4); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .logout-btn { display:inline-flex; align-items:center; gap:0.4em; font-size:0.83em; font-weight:600; color:rgba(255,255,255,0.5); border:1px solid var(--border); border-radius:10px; padding:0.45em 0.9em; text-decoration:none; transition:all 0.2s; }
+    .logout-btn:hover { background:rgba(255,255,255,0.06); color:#fff; }
+
+    main { max-width:1200px; margin:0 auto; padding:3em 1.5em; }
+    .page-title { font-size:1.6em; font-weight:800; letter-spacing:-0.02em; margin-bottom:0.25em; }
+    .page-sub { color:var(--text-muted); font-size:0.9em; margin-bottom:3em; }
+
+    /* KPI */
+    .kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1.25em; margin-bottom:3em; }
+    .kpi-card { background:linear-gradient(135deg,rgba(0,188,212,0.08),rgba(13,71,161,0.1)); border:1px solid rgba(0,188,212,0.2); border-radius:18px; padding:1.75em 1.5em; text-align:center; transition:all 0.3s; }
+    .kpi-card:hover { transform:translateY(-5px); border-color:rgba(0,188,212,0.4); }
+    .kpi-value { font-size:2.3em; font-weight:800; letter-spacing:-0.03em; background:linear-gradient(135deg,#00BCD4,#80DEEA); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; line-height:1.1; }
+    .kpi-label { font-size:0.76em; color:var(--text-muted); font-weight:600; letter-spacing:0.06em; text-transform:uppercase; margin-top:0.4em; }
+
+    .sdiv { height:1px; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.08),transparent); margin:3em 0; }
+
+    /* Table */
+    .section { background:var(--surface2); border:1px solid var(--border); border-radius:18px; padding:1.75em; margin-bottom:2em; }
+    .section h2 { font-size:1.1em; font-weight:700; color:#fff; margin-bottom:0.3em; }
+    .section p { font-size:0.87em; color:var(--text-muted); margin-bottom:1.5em; }
+    .metrics-table { width:100%; border-collapse:collapse; }
+    .metrics-table th { font-size:0.72em; font-weight:600; color:rgba(255,255,255,0.35); letter-spacing:0.08em; text-transform:uppercase; padding:0.6em 0.9em; text-align:left; border-bottom:1px solid var(--border); }
+    .metrics-table td { font-size:0.88em; color:var(--text-muted); padding:0.75em 0.9em; border-bottom:1px solid rgba(255,255,255,0.04); }
+    .metrics-table td:last-child { color:#34D399; font-weight:700; }
+    .metrics-table tr:hover td { background:rgba(255,255,255,0.02); }
+
+    /* Charts */
+    .charts-row { display:grid; grid-template-columns:1fr 1fr; gap:2em; margin-top:2em; }
+    @media(max-width:768px){ .charts-row{ grid-template-columns:1fr; } }
+    .chart-box { background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:16px; padding:1.5em; }
+    .chart-box h4 { font-size:0.78em; font-weight:600; color:rgba(255,255,255,0.4); margin-bottom:1em; letter-spacing:0.06em; text-transform:uppercase; }
+    .chart-canvas { position:relative; height:200px; }
+
+    /* Insights */
+    .insights-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25em; }
+    @media(max-width:768px){ .insights-grid{ grid-template-columns:1fr; } }
+    .insight-card { background:var(--surface2); border:1px solid var(--border); border-radius:16px; padding:1.75em; text-align:center; transition:all 0.3s; }
+    .insight-card:hover { border-color:rgba(0,188,212,0.25); transform:translateY(-4px); }
+    .insight-card ion-icon { font-size:2em; color:var(--accent); display:block; margin-bottom:0.7em; }
+    .insight-card h3 { font-size:0.97em; font-weight:700; color:#fff; margin-bottom:0.4em; }
+    .insight-card p { font-size:0.83em; color:var(--text-muted); line-height:1.7; }
+
+    /* CTA */
+    .cta-block { text-align:center; padding:3em 0 1em; }
+    .cta-block h2 { font-size:1.6em; font-weight:800; color:#fff; margin-bottom:0.4em; }
+    .cta-block p { color:var(--text-muted); margin-bottom:1.75em; }
+    .cta-btn { display:inline-flex; align-items:center; gap:0.5em; background:linear-gradient(135deg,#FFB300,#FF8F00); color:#1a1a1a; border-radius:12px; padding:0.85em 2em; font-weight:700; text-decoration:none; transition:all 0.25s; box-shadow:0 4px 20px rgba(255,179,0,0.35); }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(255,179,0,0.5); }
+
+    footer { background:rgba(5,10,20,0.95); border-top:1px solid var(--border); text-align:center; padding:1.5em; font-size:0.82em; color:rgba(255,255,255,0.25); margin-top:2em; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-text">Onco-Ally Partner Dashboard</div>
+    <a href="logout.html" class="logout-btn"><ion-icon name="log-out-outline"></ion-icon> Logout</a>
+  </header>
+
+  <main>
+    <div class="page-title">Partner Analytics</div>
+    <p class="page-sub">Key performance metrics and collaboration insights for your partnership with Onco-Ally.</p>
+
+    <!-- KPIs -->
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="kpi-value">98%</div><div class="kpi-label">Integration Accuracy</div></div>
+      <div class="kpi-card"><div class="kpi-value">99.9%</div><div class="kpi-label">System Uptime</div></div>
+      <div class="kpi-card"><div class="kpi-value">5M+</div><div class="kpi-label">Patient Records</div></div>
+      <div class="kpi-card"><div class="kpi-value">1.2s</div><div class="kpi-label">Response Time</div></div>
+    </div>
+
+    <div class="sdiv"></div>
+
+    <!-- Analytics table + charts -->
+    <div class="section">
+      <h2>Analytics Overview</h2>
+      <p>Advanced learning models and real-time integration metrics.</p>
+      <table class="metrics-table">
+        <tr><th>Metric</th><th>Value</th></tr>
+        <tr><td>Data Accuracy</td><td>98%</td></tr>
+        <tr><td>System Uptime</td><td>99.9%</td></tr>
+        <tr><td>Learning Model Efficiency</td><td>92%</td></tr>
+        <tr><td>Outcome Improvement</td><td>30%+</td></tr>
+      </table>
+      <div class="charts-row">
+        <div class="chart-box">
+          <h4>Outcome Distribution</h4>
+          <div class="chart-canvas"><canvas id="pieChart"></canvas></div>
+        </div>
+        <div class="chart-box">
+          <h4>Model Efficiency (%)</h4>
+          <div class="chart-canvas"><canvas id="barChart"></canvas></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sdiv"></div>
+
+    <!-- Insights -->
+    <div style="text-align:center; margin-bottom:2em;">
+      <h2 style="font-size:1.4em; font-weight:800; letter-spacing:-0.02em;">Key Insights &amp; Collaborations</h2>
+    </div>
+    <div class="insights-grid">
+      <div class="insight-card"><ion-icon name="analytics-outline"></ion-icon><h3>Predictive Analytics</h3><p>Forecast treatment outcomes and optimize clinical decisions before issues arise.</p></div>
+      <div class="insight-card"><ion-icon name="cloud-upload-outline"></ion-icon><h3>Data Integration</h3><p>Real-time integration with EMRs and patient data for seamless actionable insights.</p></div>
+      <div class="insight-card"><ion-icon name="people-circle-outline"></ion-icon><h3>Collaborative Network</h3><p>Connect with leading providers and research teams across the globe.</p></div>
+    </div>
+
+    <div class="sdiv"></div>
+
+    <div class="cta-block" id="cta">
+      <h2>Ready to Go Deeper?</h2>
+      <p>Contact our partnership team to unlock advanced analytics and collaboration tools.</p>
+      <a href="contact.html" class="cta-btn"><ion-icon name="mail-outline"></ion-icon> Contact Partnership Team</a>
+    </div>
+  </main>
+
+  <footer>&copy; 2025 Onco-Ally. All rights reserved.</footer>
+
+  <script>
+    Chart.defaults.color = 'rgba(255,255,255,0.45)';
+    Chart.defaults.borderColor = 'rgba(255,255,255,0.06)';
+
+    new Chart(document.getElementById('pieChart').getContext('2d'), {
+      type:'pie',
+      data:{ labels:['Improved','Stable','Declined'], datasets:[{ data:[55,30,15], backgroundColor:['#00BCD4','rgba(0,188,212,0.35)','rgba(255,255,255,0.08)'], borderWidth:0 }] },
+      options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'bottom', labels:{ color:'rgba(255,255,255,0.5)', padding:12, font:{size:11} } } } }
+    });
+
+    new Chart(document.getElementById('barChart').getContext('2d'), {
+      type:'bar',
+      data:{ labels:['Model A','Model B','Model C','Integration'], datasets:[{ label:'Efficiency (%)', data:[90,85,92,95], backgroundColor:['rgba(0,188,212,0.6)','rgba(139,92,246,0.6)','rgba(16,185,129,0.6)','rgba(245,158,11,0.6)'], borderRadius:8, borderWidth:0 }] },
+      options:{ responsive:true, maintainAspectRatio:false, scales:{ y:{beginAtZero:true, max:100, grid:{color:'rgba(255,255,255,0.04)'}}, x:{grid:{display:false}} }, plugins:{legend:{display:false}} }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,246 @@
+/* ---------------- Global Reset & Base ---------------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #fff;
+  color: #333;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+/* ---------------- Container ---------------- */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1em;
+}
+
+/* ---------------- Header ---------------- */
+.main-header {
+  background-color: #0D47A1; /* Deep Blue */
+  padding: 1em 0;
+  border-bottom: 1px solid #eee;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+.logo-img {
+  width: 36px;
+  height: 36px;
+}
+.logo h1 {
+  color: #fff;
+  font-size: 1.4em;
+  font-weight: 600;
+}
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1em;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+}
+nav ul li a:hover,
+nav ul li a.active {
+  text-decoration: underline;
+}
+.header-actions {
+  display: flex;
+  gap: 0.5em;
+}
+.button-signin,
+.button-signup {
+  background: #FFC107;
+  color: #333;
+  padding: 0.4em 0.8em;
+  border-radius: 4px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.button-signin:hover,
+.button-signup:hover {
+  background: #FFB300;
+}
+
+/* ---------------- About Hero ---------------- */
+.about-hero {
+  background: linear-gradient(to right, #0D47A1, #1565C0);
+  color: #fff;
+  text-align: center;
+  padding: 1.5em 0;
+  overflow: hidden;
+}
+.about-hero h2 {
+  font-size: 2em;
+  margin-bottom: 0.3em;
+  font-weight: 700;
+}
+.about-hero .tagline {
+  font-size: 1.2em;
+  color: #e0e0e0;
+  font-style: italic;
+}
+
+/* ---------------- About Content ---------------- */
+.about-content {
+  padding: 2em 0;
+  text-align: center;
+}
+.about-content .section {
+  margin-bottom: 2em;
+}
+.about-content h3 {
+  font-size: 1.6em;
+  color: #0D47A1;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+  text-align: center;
+}
+.about-content p {
+  font-size: 1em;
+  color: #555;
+  line-height: 1.5;
+  max-width: 800px;
+  margin: 0.5em auto;
+  text-align: justify;
+}
+
+/* ---------------- Patient Journey Map Section ---------------- */
+.journey-map-section {
+  background: #fff;
+  padding: 2em 0;
+  text-align: center;
+}
+.journey-map-section h3 {
+  font-size: 1.6em;
+  color: #0D47A1;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+}
+.journey-map {
+  max-width: 900px;
+  width: 100%;
+  margin: 1em auto;
+  border: 4px solid #1565C0;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.journey-text {
+  font-size: 1em;
+  color: #555;
+  max-width: 800px;
+  margin: 0.5em auto;
+  line-height: 1.5;
+  text-align: center;
+}
+.journey-highlight {
+  font-size: 1.05em;
+  color: #333;
+  font-weight: 600;
+  margin-top: 1em;
+}
+
+/* ---------------- Footer ---------------- */
+footer {
+  background: #f8f9fa;
+  border-top: 1px solid #eee;
+  text-align: center;
+  padding: 1em 0;
+  margin-top: 2em;
+  font-size: 0.9em;
+  color: #666;
+}
+.footer-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1em;
+}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 768px) {
+  .header-inner {
+    flex-wrap: wrap;
+    gap: 1em;
+  }
+  nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .about-hero h2 {
+    font-size: 1.8em;
+  }
+  .about-hero .tagline {
+    font-size: 1em;
+  }
+  .about-content .section {
+    margin-bottom: 1.5em;
+  }
+}
+/* Values Section */
+.values-grid {
+  display: grid;
+  /* Automatically adjust columns based on screen size */
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5em;
+  margin-top: 1em;
+}
+
+.value-item {
+  background: #fff;
+  border-radius: 8px;
+  text-align: center;
+  padding: 1em;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.value-item ion-icon {
+  font-size: 2em;
+  color: #0D47A1;
+  margin-bottom: 0.5em;
+}
+
+.value-item h4 {
+  font-size: 1.1em;
+  margin-bottom: 0.3em;
+  color: #333;
+  font-weight: 600;
+}
+
+.value-item p {
+  font-size: 0.95em;
+  color: #555;
+  line-height: 1.4;
+  margin: 0 auto;
+  max-width: 250px; /* optional to keep text narrower */
+}
+
+/* Hover Effect */
+.value-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}

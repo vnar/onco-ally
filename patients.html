@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Patient Dashboard | Onco-Ally</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    :root {
+      --bg:#0a0f1e; --surface:#0f1a35; --surface2:rgba(255,255,255,0.04);
+      --border:rgba(255,255,255,0.08); --accent:#00BCD4; --gold:#FFB300;
+      --red:#F87171; --green:#34D399; --purple:#A78BFA;
+      --text:#ffffff; --text-muted:rgba(255,255,255,0.5); --text-dim:rgba(255,255,255,0.25);
+    }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+    a { color:var(--accent); text-decoration:none; }
+    a:hover { text-decoration:underline; }
+
+    /* ---- Header ---- */
+    header {
+      background:rgba(10,15,30,0.95); backdrop-filter:blur(20px);
+      border-bottom:1px solid var(--border); padding:0.85em 0;
+      position:sticky; top:0; z-index:100;
+    }
+    .header-inner { max-width:1400px; margin:0 auto; padding:0 1.5em; display:flex; align-items:center; justify-content:space-between; gap:1em; flex-wrap:wrap; }
+    .header-left { display:flex; align-items:center; gap:1em; }
+    .logo-text { font-size:1.2em; font-weight:700; background:linear-gradient(90deg,#fff,#00BCD4); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .patient-chip { display:flex; align-items:center; gap:0.5em; background:rgba(255,255,255,0.06); border:1px solid var(--border); border-radius:999px; padding:0.3em 0.9em 0.3em 0.4em; font-size:0.8em; color:var(--text-muted); }
+    .patient-chip img { width:28px; height:28px; border-radius:50%; object-fit:cover; border:2px solid rgba(0,188,212,0.4); }
+    nav ul { list-style:none; display:flex; gap:0.15em; flex-wrap:wrap; }
+    nav ul li a { color:rgba(255,255,255,0.6); font-size:0.85em; font-weight:500; padding:0.4em 0.8em; border-radius:8px; transition:all 0.2s; }
+    nav ul li a:hover, nav ul li a.active { color:#fff; background:rgba(255,255,255,0.08); text-decoration:none; }
+    .header-actions { display:flex; gap:0.5em; }
+    .icon-btn { background:none; border:1px solid var(--border); color:rgba(255,255,255,0.6); cursor:pointer; border-radius:10px; width:36px; height:36px; display:flex; align-items:center; justify-content:center; font-size:1.1em; transition:all 0.2s; }
+    .icon-btn:hover { background:rgba(255,255,255,0.08); color:#fff; }
+
+    /* ---- Main Layout ---- */
+    main { max-width:1400px; margin:0 auto; padding:2em 1.5em; }
+    .dash-header { margin-bottom:2em; }
+    .dash-header h2 { font-size:1.6em; font-weight:800; letter-spacing:-0.02em; }
+    .dash-header p { color:var(--text-muted); font-size:0.9em; margin-top:0.2em; }
+
+    .dashboard-container { display:grid; grid-template-columns:1fr 380px; gap:1.5em; }
+    @media(max-width:900px){ .dashboard-container{ grid-template-columns:1fr; } }
+
+    /* ---- Section Cards ---- */
+    .section {
+      background:var(--surface2); border:1px solid var(--border);
+      border-radius:18px; padding:1.5em; margin-bottom:1.5em;
+      transition:border-color 0.2s;
+    }
+    .section:hover { border-color:rgba(255,255,255,0.14); }
+    .section h3 {
+      font-size:0.9em; font-weight:700; color:rgba(255,255,255,0.7); letter-spacing:0.04em;
+      text-transform:uppercase; margin-bottom:1em; display:flex; align-items:center; gap:0.5em;
+    }
+    .section h3 ion-icon { color:var(--accent); font-size:1.1em; }
+    .section ul { list-style:none; }
+    .section ul li { color:var(--text-muted); font-size:0.88em; padding:0.4em 0; border-bottom:1px solid rgba(255,255,255,0.04); }
+    .section ul li:last-child { border-bottom:none; }
+    .section ul li strong { color:rgba(255,255,255,0.8); }
+    .section p { font-size:0.88em; color:var(--text-muted); line-height:1.7; }
+    .section p strong { color:rgba(255,255,255,0.8); }
+    .section p em { color:var(--accent); font-style:normal; }
+
+    /* ---- Graph container ---- */
+    .graph-container { position:relative; height:220px; margin-top:1.25em; }
+
+    /* ---- Timeline ---- */
+    .timeline-container { padding-left:1.5em; border-left:2px solid rgba(0,188,212,0.3); margin-top:0.5em; }
+    .timeline-step { margin-bottom:1.25em; position:relative; cursor:default; }
+    .timeline-step::before { content:''; position:absolute; left:-1.6em; top:0.35em; width:8px; height:8px; background:var(--accent); border-radius:50%; box-shadow:0 0 8px rgba(0,188,212,0.5); }
+    .timeline-year { font-size:0.78em; font-weight:700; color:var(--accent); margin-bottom:0.15em; letter-spacing:0.04em; }
+    .timeline-label { font-size:0.85em; color:rgba(255,255,255,0.6); }
+    .timeline-step:hover .tooltip { opacity:1; visibility:visible; }
+    .tooltip { position:absolute; left:10px; top:1.8em; background:rgba(15,26,53,0.98); border:1px solid var(--border); border-radius:10px; padding:0.6em 0.9em; width:200px; opacity:0; visibility:hidden; transition:opacity 0.2s; box-shadow:0 10px 30px rgba(0,0,0,0.4); z-index:10; font-size:0.8em; color:var(--text-muted); }
+
+    /* ---- Chatbot ---- */
+    .chatbot-container { background:var(--surface2); border:1px solid var(--border); border-radius:18px; padding:1.25em; margin-bottom:1.5em; }
+    .chatbot-header { display:flex; align-items:center; gap:0.5em; border-bottom:1px solid var(--border); padding-bottom:0.75em; margin-bottom:0.75em; }
+    .chatbot-header strong { font-size:0.9em; color:#fff; }
+    .chatbot-header ion-icon { color:var(--accent); font-size:1.2em; }
+    .chatbot-messages { height:180px; overflow-y:auto; padding:0.5em; margin-bottom:0.75em; scrollbar-width:thin; scrollbar-color:rgba(0,188,212,0.3) transparent; }
+    .chat-msg { font-size:0.82em; margin-bottom:0.6em; line-height:1.6; }
+    .chat-msg.bot { color:var(--text-muted); }
+    .chat-msg.user { color:rgba(255,255,255,0.8); text-align:right; }
+    .chatbot-input { display:flex; gap:0.5em; }
+    .chatbot-input input { flex:1; background:rgba(255,255,255,0.06); border:1px solid var(--border); border-radius:10px; padding:0.6em 0.9em; font-family:inherit; font-size:0.85em; color:#fff; outline:none; transition:all 0.2s; }
+    .chatbot-input input:focus { border-color:rgba(0,188,212,0.4); background:rgba(0,188,212,0.04); }
+    .chatbot-input input::placeholder { color:rgba(255,255,255,0.25); }
+    .chatbot-input button { background:linear-gradient(135deg,var(--accent),#26C6DA); color:#0a0f1e; border:none; border-radius:10px; padding:0.6em 1em; font-family:inherit; font-size:0.85em; font-weight:700; cursor:pointer; transition:all 0.2s; }
+    .chatbot-input button:hover { transform:translateY(-1px); box-shadow:0 4px 14px rgba(0,188,212,0.4); }
+
+    /* ---- PDF embed ---- */
+    .pdf-embed { width:100%; height:280px; border:none; border-radius:10px; margin-top:0.75em; }
+
+    /* ---- Footer ---- */
+    footer { background:rgba(5,10,20,0.95); border-top:1px solid var(--border); text-align:center; padding:1.5em 0; font-size:0.82em; color:var(--text-dim); margin-top:2em; }
+
+    /* ---- Dark mode ---- */
+    body.dark { --bg:#04080f; --surface2:rgba(255,255,255,0.03); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="header-left">
+        <div class="logo-text">Onco-Ally</div>
+        <div class="patient-chip">
+          <img src="https://ui-avatars.com/api/?name=John+Doe&background=0D47A1&color=fff&size=28" alt="John Doe">
+          John Doe
+        </div>
+      </div>
+      <nav><ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="patients.html" class="active">Dashboard</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul></nav>
+      <div class="header-actions">
+        <button class="icon-btn" onclick="alert('Connecting to EMR...')" title="Connect to EMR"><ion-icon name="server-outline"></ion-icon></button>
+        <button class="icon-btn" onclick="toggleDarkMode()" title="Toggle Dark Mode"><ion-icon name="moon-outline"></ion-icon></button>
+        <a href="logout.html" class="icon-btn" title="Logout"><ion-icon name="log-out-outline"></ion-icon></a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="dash-header">
+      <h2>Patient Dashboard</h2>
+      <p>Welcome back, <strong>John Doe</strong> — Stage IV Prostate Cancer &nbsp;·&nbsp; Last updated: Today</p>
+    </div>
+
+    <div class="dashboard-container">
+      <!-- LEFT COLUMN -->
+      <div class="left-column">
+
+        <div class="section">
+          <h3><ion-icon name="calendar-outline"></ion-icon> Treatment &amp; Scheduling</h3>
+          <p><strong>Current Regimen:</strong> FDA-approved <em>Docetaxel</em></p>
+          <ul style="margin-top:0.75em;">
+            <li><strong>Next Blood Draw:</strong> Apr 20, 2025, 9:00 AM &mdash; Blood Work</li>
+            <li><strong>Next Therapy Session:</strong> Apr 22, 2025, 2:00 PM &mdash; EMR</li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <h3><ion-icon name="medkit-outline"></ion-icon> Medication Adherence</h3>
+          <p>This month's adherence rate: <strong style="color:#34D399;">93%</strong></p>
+          <div class="graph-container"><canvas id="adherenceChart"></canvas></div>
+        </div>
+
+        <div class="section">
+          <h3><ion-icon name="pulse-outline"></ion-icon> Vital Signs</h3>
+          <p>Latest readings from wearables &amp; blood work:</p>
+          <ul style="margin-top:0.75em;">
+            <li><strong>Heart Rate:</strong> 78 bpm</li>
+            <li><strong>O₂ Saturation:</strong> 97%</li>
+            <li><strong>PSA Level:</strong> 4.2 ng/mL</li>
+            <li><strong>Body Temp:</strong> 98.6°F</li>
+            <li><strong>Respiratory Rate:</strong> 16 bpm</li>
+          </ul>
+          <div class="graph-container"><canvas id="vitalsChart"></canvas></div>
+        </div>
+
+        <div class="section">
+          <h3><ion-icon name="notifications-outline"></ion-icon> Symptom Tracker</h3>
+          <p>Recent symptoms: Mild fatigue, occasional urinary discomfort.</p>
+          <p style="margin-top:0.5em;">Next medication alert: <strong style="color:#FFB300;">In 2 hours.</strong></p>
+        </div>
+
+        <div class="section">
+          <h3><ion-icon name="help-circle-outline"></ion-icon> Additional Resources</h3>
+          <ul>
+            <li><strong>AI Symptom Checker</strong> — Quickly assess symptom severity</li>
+            <li><strong>Nutritional Guide</strong> — Tailored meal plans for your treatment stage</li>
+            <li><strong>Lifestyle &amp; Mental Health</strong> — Counseling &amp; support group info</li>
+            <li><strong>Financial Assistance</strong> — Grants &amp; transport support details</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="right-column">
+
+        <div class="section">
+          <h3><ion-icon name="time-outline"></ion-icon> 10-Year Cancer Journey</h3>
+          <div class="timeline-container">
+            <div class="timeline-step"><div class="timeline-year">2015</div><div class="timeline-label">Detection</div><div class="tooltip">Cancer first detected during routine screening.</div></div>
+            <div class="timeline-step"><div class="timeline-year">2016</div><div class="timeline-label">Surgery</div><div class="tooltip">Tumor surgically removed.</div></div>
+            <div class="timeline-step"><div class="timeline-year">2017</div><div class="timeline-label">Chemotherapy</div><div class="tooltip">Intensive chemo to reduce tumor burden.</div></div>
+            <div class="timeline-step"><div class="timeline-year">2018</div><div class="timeline-label">Immunotherapy</div><div class="tooltip">Targeted immunotherapy initiated.</div></div>
+            <div class="timeline-step"><div class="timeline-year">2019</div><div class="timeline-label">Drug Resistance</div><div class="tooltip">Cancer resisted initial treatments.</div></div>
+            <div class="timeline-step"><div class="timeline-year">2020–Present</div><div class="timeline-label">New Drug Therapy</div><div class="tooltip">Docetaxel introduced to manage progression.</div></div>
+          </div>
+        </div>
+
+        <div class="chatbot-container">
+          <div class="chatbot-header">
+            <ion-icon name="chatbubbles-outline"></ion-icon>
+            <strong>OncoChat</strong>
+            <span style="margin-left:auto; font-size:0.72em; color:rgba(255,255,255,0.3); background:rgba(52,211,153,0.1); border:1px solid rgba(52,211,153,0.2); border-radius:999px; padding:0.15em 0.6em; color:#34D399;">Online</span>
+          </div>
+          <div class="chatbot-messages" id="chatbotMessages">
+            <div class="chat-msg bot">OncoChat: Welcome! Ask me about blood work, wearable data, or therapy schedule.</div>
+            <div class="chat-msg bot">OncoChat: Try "What are my latest blood work results?"</div>
+          </div>
+          <div class="chatbot-input">
+            <input type="text" id="chatbotInput" placeholder="Ask your question..." onkeydown="if(event.key==='Enter')sendChat()">
+            <button onclick="sendChat()">Send</button>
+          </div>
+        </div>
+
+        <div class="section">
+          <h3><ion-icon name="document-text-outline"></ion-icon> Health Report</h3>
+          <embed src="my-medical-report.pdf" type="application/pdf" class="pdf-embed">
+          <p style="font-size:0.78em; color:var(--text-dim); margin-top:0.5em;"><em>Ensure my-medical-report.pdf is in your folder for full view.</em></p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2025 Onco-Ally &nbsp;·&nbsp; Demo Version — No real patient data stored.
+  </footer>
+
+  <script>
+    function toggleDarkMode() { document.body.classList.toggle('dark'); }
+
+    // Chart defaults dark
+    Chart.defaults.color = 'rgba(255,255,255,0.45)';
+    Chart.defaults.borderColor = 'rgba(255,255,255,0.06)';
+
+    const adherenceCtx = document.getElementById('adherenceChart')?.getContext('2d');
+    if (adherenceCtx) {
+      new Chart(adherenceCtx, {
+        type:'line',
+        data:{ labels:['Apr 10','Apr 17','Apr 24','May 1'], datasets:[{ label:'Adherence (%)', data:[88,90,93,95], backgroundColor:'rgba(0,188,212,0.12)', borderColor:'#00BCD4', borderWidth:2, fill:true, tension:0.4, pointBackgroundColor:'#00BCD4', pointRadius:4 }] },
+        options:{ responsive:true, maintainAspectRatio:false, scales:{ y:{ suggestedMin:80, suggestedMax:100, grid:{color:'rgba(255,255,255,0.04)'} }, x:{grid:{display:false}} }, plugins:{legend:{display:false}} }
+      });
+    }
+    const vitalsCtx = document.getElementById('vitalsChart')?.getContext('2d');
+    if (vitalsCtx) {
+      new Chart(vitalsCtx, {
+        type:'bar',
+        data:{ labels:['Heart Rate','O₂ Sat','PSA','Temp (°F)','Resp Rate'], datasets:[{ label:'Reading', data:[78,97,4.2,98.6,16], backgroundColor:['rgba(0,188,212,0.6)','rgba(52,211,153,0.6)','rgba(167,139,250,0.6)','rgba(245,158,11,0.6)','rgba(248,113,113,0.6)'], borderRadius:6, borderWidth:0 }] },
+        options:{ responsive:true, maintainAspectRatio:false, scales:{ y:{ beginAtZero:true, suggestedMax:120, grid:{color:'rgba(255,255,255,0.04)'} }, x:{grid:{display:false}} }, plugins:{legend:{display:false}} }
+      });
+    }
+
+    function sendChat() {
+      const input = document.getElementById('chatbotInput');
+      const messages = document.getElementById('chatbotMessages');
+      if (!input || !messages || !input.value.trim()) return;
+      const userMessage = input.value.trim();
+      const userDiv = document.createElement('div');
+      userDiv.className = 'chat-msg user';
+      userDiv.textContent = userMessage;
+      messages.appendChild(userDiv);
+      setTimeout(() => {
+        const botDiv = document.createElement('div');
+        botDiv.className = 'chat-msg bot';
+        botDiv.textContent = 'OncoChat: ' + getChatbotResponse(userMessage);
+        messages.appendChild(botDiv);
+        messages.scrollTop = messages.scrollHeight;
+      }, 800);
+      input.value = '';
+    }
+
+    function getChatbotResponse(msg) {
+      const t = msg.toLowerCase();
+      if(t.includes('blood work')||t.includes('blood draw')) return 'Your latest blood work indicates stable PSA and normal inflammation markers.';
+      if(t.includes('therapy')) return 'Your next therapy session is Apr 22, 2025, at 2:00 PM.';
+      if(t.includes('wearable')) return 'Wearable data shows steady heart rate and consistent activity — supporting adherence.';
+      if(t.includes('emr')) return 'EMR records are updated in real time. Click the EMR button to view complete records.';
+      if(t.includes('symptom')) return 'Your symptom tracker notes mild fatigue and occasional discomfort. Monitor for changes.';
+      if(t.includes('psa')) return 'Your latest PSA is 4.2 ng/mL. Keep monitoring regularly.';
+      if(t.includes('support')) return 'You can join our support group to connect with peers going through similar journeys.';
+      return "I'm here to help! Try asking about 'blood work', 'therapy', 'wearable data', or 'PSA'.";
+    }
+  </script>
+</body>
+</html>

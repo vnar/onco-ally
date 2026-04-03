@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign Up | Onco-Ally</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    body {
+      font-family:'Inter',sans-serif; background:#0a0f1e;
+      min-height:100vh; display:flex; align-items:center; justify-content:center;
+      padding:1.5em; position:relative; overflow:hidden;
+    }
+    body::before {
+      content:''; position:fixed; inset:0;
+      background: radial-gradient(ellipse at 20% 50%,rgba(0,188,212,0.1) 0%,transparent 55%), radial-gradient(ellipse at 80% 20%,rgba(13,71,161,0.2) 0%,transparent 50%);
+      pointer-events:none;
+    }
+    .signup-wrap { width:100%; max-width:440px; position:relative; z-index:1; animation:slideUp 0.5s cubic-bezier(0.4,0,0.2,1) both; }
+    @keyframes slideUp { from{opacity:0;transform:translateY(30px);} to{opacity:1;transform:translateY(0);} }
+    .signup-card {
+      background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1);
+      border-radius:24px; padding:2.5em 2.25em;
+      backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+      box-shadow:0 30px 80px rgba(0,0,0,0.5);
+    }
+    .login-brand { display:flex; align-items:center; justify-content:center; gap:0.6em; margin-bottom:2em; }
+    .login-brand img { width:38px; height:38px; border-radius:10px; box-shadow:0 0 16px rgba(0,188,212,0.4); }
+    .login-brand span { font-size:1.3em; font-weight:700; background:linear-gradient(90deg,#fff,#00BCD4); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    h1 { font-size:1.6em; font-weight:800; color:#fff; letter-spacing:-0.02em; margin-bottom:0.3em; text-align:center; }
+    .subtitle { font-size:0.85em; color:rgba(255,255,255,0.4); text-align:center; margin-bottom:2em; }
+    .input-group { position:relative; margin-bottom:1em; }
+    .input-group ion-icon { position:absolute; left:1em; top:50%; transform:translateY(-50%); color:rgba(255,255,255,0.35); font-size:1.1em; pointer-events:none; }
+    .input-group input, .input-group select {
+      width:100%; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);
+      border-radius:12px; padding:0.85em 1em 0.85em 2.8em;
+      font-family:inherit; font-size:0.92em; color:#fff; outline:none; transition:all 0.2s;
+    }
+    .input-group select { cursor:pointer; }
+    .input-group select option { background:#0f1a35; color:#fff; }
+    .input-group input::placeholder { color:rgba(255,255,255,0.3); }
+    .input-group input:focus, .input-group select:focus { border-color:rgba(0,188,212,0.5); background:rgba(0,188,212,0.05); box-shadow:0 0 0 3px rgba(0,188,212,0.1); }
+    .input-group input[readonly] { opacity:0.7; cursor:default; }
+    .signup-btn {
+      width:100%; background:linear-gradient(135deg,#FFB300 0%,#FF8F00 100%);
+      color:#1a1a1a; border:none; border-radius:12px; padding:0.9em;
+      font-family:inherit; font-size:0.95em; font-weight:700; cursor:pointer;
+      transition:all 0.25s; box-shadow:0 4px 20px rgba(255,179,0,0.35); margin-top:0.5em;
+    }
+    .signup-btn:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(255,179,0,0.5); }
+    .info-msg { font-size:0.8em; color:#00BCD4; text-align:center; margin-top:0.75em; min-height:1.2em; }
+    .back-link { display:block; text-align:center; margin-top:1.5em; font-size:0.82em; color:rgba(255,255,255,0.35); }
+    .back-link a { color:#00BCD4; text-decoration:none; }
+    .back-link a:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+  <div class="signup-wrap">
+    <div class="signup-card">
+      <div class="login-brand">
+        <img src="images/onco-ally-logo.png" alt="Onco-Ally">
+        <span>Onco-Ally</span>
+      </div>
+      <h1>Create Account</h1>
+      <p class="subtitle">Join the movement to transform cancer care</p>
+
+      <form onsubmit="return handleSignup(event)">
+        <div class="input-group">
+          <ion-icon name="person-outline"></ion-icon>
+          <input type="text" id="fullname" placeholder="Full Name" required>
+        </div>
+        <div class="input-group">
+          <ion-icon name="mail-outline"></ion-icon>
+          <input type="email" id="email" placeholder="Email Address" required>
+        </div>
+        <div class="input-group">
+          <ion-icon name="people-outline"></ion-icon>
+          <select id="accountType" required>
+            <option value="">Select Account Type</option>
+            <option value="patient">Patient</option>
+            <option value="provider">Provider</option>
+            <option value="partner">Partner</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <ion-icon name="person-circle-outline"></ion-icon>
+          <input type="text" id="username" placeholder="Username (auto-filled)" readonly>
+        </div>
+        <div class="input-group">
+          <ion-icon name="lock-closed-outline"></ion-icon>
+          <input type="text" id="demoPassword" placeholder="Password (auto-filled)" readonly>
+        </div>
+        <button type="submit" class="signup-btn">Create Account</button>
+        <p class="info-msg" id="infoMsg"></p>
+      </form>
+    </div>
+    <p class="back-link">Already have an account? <a href="login.html">Sign in</a> &nbsp;·&nbsp; <a href="index.html">← Home</a></p>
+  </div>
+
+  <script>
+    const credentials = { patient:{username:"patient",password:"onco2025"}, provider:{username:"provider",password:"onco2025"}, partner:{username:"partner",password:"onco2025"} };
+    document.getElementById("accountType").addEventListener("change", function() {
+      const sel = this.value;
+      const usernameField = document.getElementById("username");
+      const passField = document.getElementById("demoPassword");
+      const infoMsg = document.getElementById("infoMsg");
+      if (credentials[sel]) {
+        usernameField.value = credentials[sel].username;
+        passField.value = credentials[sel].password;
+        infoMsg.textContent = "Demo credentials set for a " + sel + " account.";
+      } else {
+        usernameField.value = ""; passField.value = ""; infoMsg.textContent = "";
+      }
+    });
+    function handleSignup(event) {
+      event.preventDefault();
+      const fullname = document.getElementById("fullname").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const accountType = document.getElementById("accountType").value;
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("demoPassword").value;
+      const infoMsg = document.getElementById("infoMsg");
+      if (!fullname || !email || !accountType) { infoMsg.textContent = "Please complete all fields."; return false; }
+      alert("Account created!\n\nType: " + accountType.charAt(0).toUpperCase() + accountType.slice(1) + "\nUsername: " + username + "\nPassword: " + password);
+      window.location.href = "login.html";
+      return false;
+    }
+  </script>
+</body>
+</html>

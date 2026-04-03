@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>For Partners | Onco-Ally</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .page-hero { position:relative; padding:6em 0 4em; text-align:center; background:linear-gradient(135deg,#050d1f 0%,#0a1a3a 50%,#0d2a5e 100%); overflow:hidden; }
+    .page-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 50% 60%,rgba(0,188,212,0.12) 0%,transparent 60%); }
+    .page-hero-content { position:relative; z-index:1; }
+    .page-hero h2 { font-size:clamp(2.2em,5vw,3.5em); font-weight:800; color:#fff; letter-spacing:-0.03em; margin-bottom:0.4em; }
+    .page-hero p { color:rgba(255,255,255,0.55); font-size:1.1em; max-width:580px; margin:0 auto; line-height:1.75; }
+    .page-hero .cta-button { display:inline-flex; align-items:center; gap:0.5em; background:linear-gradient(135deg,#FFB300 0%,#FF8F00 100%); color:#1a1a1a; padding:0.85em 2em; border-radius:12px; font-weight:700; margin-top:1.5em; transition:all 0.3s; box-shadow:0 4px 20px rgba(255,179,0,0.35); }
+    .page-hero .cta-button:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(255,179,0,0.5); }
+
+    .partners-main { padding: 5em 0; }
+    .sdiv { height:1px; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.08),transparent); margin:4em 0; }
+
+    /* KPI hexagons → stat cards */
+    .kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1.25em; margin-bottom:5em; }
+    .kpi-card {
+      background:linear-gradient(135deg,rgba(0,188,212,0.08) 0%,rgba(13,71,161,0.1) 100%);
+      border:1px solid rgba(0,188,212,0.2); border-radius:18px; padding:2em 1.5em;
+      text-align:center; transition:all 0.3s;
+    }
+    .kpi-card:hover { transform:translateY(-5px); border-color:rgba(0,188,212,0.4); box-shadow:0 20px 40px rgba(0,0,0,0.3); }
+    .kpi-value { font-size:2.4em; font-weight:800; letter-spacing:-0.03em; background:linear-gradient(135deg,#00BCD4,#80DEEA); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; line-height:1.1; }
+    .kpi-label { font-size:0.78em; color:rgba(255,255,255,0.5); font-weight:600; letter-spacing:0.04em; text-transform:uppercase; margin-top:0.4em; }
+
+    /* Analytics table */
+    .analytics-section { margin-bottom:5em; }
+    .metrics-table { width:100%; border-collapse:collapse; margin:2em 0; }
+    .metrics-table th, .metrics-table td { padding:0.85em 1.2em; text-align:left; font-size:0.9em; border-bottom:1px solid rgba(255,255,255,0.06); }
+    .metrics-table th { color:rgba(255,255,255,0.4); font-weight:600; letter-spacing:0.06em; text-transform:uppercase; font-size:0.75em; }
+    .metrics-table td { color:rgba(255,255,255,0.7); }
+    .metrics-table td:last-child { color:#34D399; font-weight:700; }
+    .metrics-table tr:hover td { background:rgba(255,255,255,0.02); }
+
+    .charts-row { display:grid; grid-template-columns:1fr 1fr; gap:2em; margin-top:2em; }
+    .chart-box { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:1.75em; }
+    .chart-box h4 { font-size:0.9em; font-weight:600; color:rgba(255,255,255,0.5); margin-bottom:1.25em; letter-spacing:0.04em; text-transform:uppercase; }
+    .chart-canvas { position:relative; height:200px; }
+    @media(max-width:768px){ .charts-row{ grid-template-columns:1fr; } }
+
+    /* Insights */
+    .insights-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5em; }
+    .insight-card { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:18px; padding:2em; text-align:center; transition:all 0.3s; }
+    .insight-card:hover { border-color:rgba(0,188,212,0.25); transform:translateY(-5px); }
+    .insight-card ion-icon { font-size:2em; color:#00BCD4; display:block; margin-bottom:0.7em; }
+    .insight-card h3 { font-size:1.05em; font-weight:700; color:#fff; margin-bottom:0.5em; }
+    .insight-card p { font-size:0.86em; color:rgba(255,255,255,0.5); line-height:1.7; }
+    @media(max-width:768px){ .insights-grid{ grid-template-columns:1fr; } }
+
+    /* CTA */
+    .partners-cta { text-align:center; padding:4em 0; }
+    .partners-cta h2 { font-size:clamp(1.6em,3vw,2.4em); font-weight:800; color:#fff; margin-bottom:0.5em; }
+    .partners-cta p { color:rgba(255,255,255,0.5); margin-bottom:2em; }
+  </style>
+</head>
+<body>
+  <header class="main-header" id="main-header">
+    <div class="container header-inner">
+      <div class="logo">
+        <img src="images/onco-ally-logo.png" alt="Onco-Ally Logo" class="logo-img">
+        <h1>Onco-Ally Partners</h1>
+      </div>
+      <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span></button>
+      <nav id="site-nav" class="site-nav"><ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="forpatients.html">For Patients</a></li>
+        <li><a href="forproviders.html">For Providers</a></li>
+        <li><a href="forpartners.html" class="active">For Partners</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="leadership.html">Leadership</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="rnd.html">MIT Learnings</a></li>
+      </ul></nav>
+      <div class="header-actions">
+        <a href="login.html" class="button-signin">Login</a>
+        <a href="signup.html" class="button-signup">Sign Up</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="page-hero">
+    <div class="container page-hero-content fade-in">
+      <span class="section-eyebrow">Partner Program</span>
+      <h2>Partner with Onco-Ally</h2>
+      <p>Join us in revolutionizing cancer care. Our platform, engineered by MIT professionals, integrates advanced technology and research to drive breakthrough innovation.</p>
+      <a href="#cta" class="cta-button"><ion-icon name="handshake-outline"></ion-icon> Get Started</a>
+    </div>
+  </section>
+
+  <main class="partners-main">
+    <div class="container">
+
+      <!-- KPIs -->
+      <div style="text-align:center; margin-bottom:2.5em;" class="reveal">
+        <span class="section-eyebrow">Key Performance Metrics</span>
+        <h2 class="section-title">Platform Impact</h2>
+      </div>
+      <div class="kpi-grid">
+        <div class="kpi-card reveal"><div class="kpi-value">98%</div><div class="kpi-label">Integration Accuracy</div></div>
+        <div class="kpi-card reveal" style="transition-delay:0.08s"><div class="kpi-value">99.9%</div><div class="kpi-label">System Uptime</div></div>
+        <div class="kpi-card reveal" style="transition-delay:0.16s"><div class="kpi-value">5M+</div><div class="kpi-label">Patient Records</div></div>
+        <div class="kpi-card reveal" style="transition-delay:0.24s"><div class="kpi-value">1.2s</div><div class="kpi-label">Response Time</div></div>
+      </div>
+
+      <div class="sdiv"></div>
+
+      <!-- Analytics -->
+      <section class="analytics-section reveal">
+        <span class="section-eyebrow">Analytics</span>
+        <h2 class="section-title" style="margin-bottom:0.5em;">Analytics Overview</h2>
+        <p style="color:rgba(255,255,255,0.5); margin-bottom:0; font-size:0.97em;">Our platform leverages advanced learning models and real-time integration to deliver actionable insights.</p>
+
+        <table class="metrics-table">
+          <tr><th>Metric</th><th>Value</th></tr>
+          <tr><td>Data Accuracy</td><td>98%</td></tr>
+          <tr><td>System Uptime</td><td>99.9%</td></tr>
+          <tr><td>Learning Model Efficiency</td><td>92%</td></tr>
+          <tr><td>Outcome Improvement</td><td>30%+</td></tr>
+        </table>
+
+        <div class="charts-row">
+          <div class="chart-box">
+            <h4>Outcome Distribution</h4>
+            <div class="chart-canvas"><canvas id="pieChart"></canvas></div>
+          </div>
+          <div class="chart-box">
+            <h4>Model Efficiency (%)</h4>
+            <div class="chart-canvas"><canvas id="barChart"></canvas></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="sdiv"></div>
+
+      <!-- Insights -->
+      <div style="text-align:center; margin-bottom:2.5em;" class="reveal">
+        <span class="section-eyebrow">Collaboration</span>
+        <h2 class="section-title">Key Insights &amp; Collaborations</h2>
+      </div>
+      <div class="insights-grid">
+        <div class="insight-card reveal"><ion-icon name="analytics-outline"></ion-icon><h3>Predictive Analytics</h3><p>Forecast treatment outcomes and optimize clinical decisions before issues arise.</p></div>
+        <div class="insight-card reveal" style="transition-delay:0.1s"><ion-icon name="cloud-upload-outline"></ion-icon><h3>Data Integration</h3><p>Seamless integration with EMRs and patient data for actionable, real-time insights.</p></div>
+        <div class="insight-card reveal" style="transition-delay:0.2s"><ion-icon name="people-circle-outline"></ion-icon><h3>Collaborative Network</h3><p>Connect with leading providers and research teams across the globe.</p></div>
+      </div>
+
+      <div class="sdiv"></div>
+
+      <section class="partners-cta" id="cta">
+        <div class="cta-inner reveal">
+          <h2>Ready to Collaborate?</h2>
+          <p>Join our network of forward-thinking partners and drive groundbreaking innovation in cancer care.</p>
+          <a href="contact.html" class="button-join" style="display:inline-flex; align-items:center; gap:0.5em; font-size:1em;">
+            <ion-icon name="mail-outline"></ion-icon> Contact Our Partnership Team
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div class="footer-brand"><img src="images/onco-ally-logo.png" alt="" style="width:24px;height:24px;border-radius:6px;opacity:0.7;"> &copy; 2026 Onco-Ally — MIT CTO Impact Project</div>
+      <div class="footer-links"><a href="index.html">Home</a><a href="rnd.html">MIT Learnings</a><a href="contact.html">Contact</a></div>
+    </div>
+  </footer>
+
+  <script>
+    window.addEventListener('scroll', () => { document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 60); });
+    const obs = new IntersectionObserver(e => e.forEach(en => { if(en.isIntersecting){ en.target.classList.add('visible'); obs.unobserve(en.target); }}), {threshold:0.1});
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    // Dark-themed charts
+    Chart.defaults.color = 'rgba(255,255,255,0.5)';
+    Chart.defaults.borderColor = 'rgba(255,255,255,0.06)';
+
+    new Chart(document.getElementById('pieChart').getContext('2d'), {
+      type:'pie',
+      data:{
+        labels:['Improved','Stable','Declined'],
+        datasets:[{ data:[55,30,15], backgroundColor:['#00BCD4','rgba(0,188,212,0.4)','rgba(255,255,255,0.1)'], borderWidth:0 }]
+      },
+      options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'bottom', labels:{ color:'rgba(255,255,255,0.5)', padding:12 } } } }
+    });
+
+    new Chart(document.getElementById('barChart').getContext('2d'), {
+      type:'bar',
+      data:{
+        labels:['Model A','Model B','Model C','Integration'],
+        datasets:[{ label:'Efficiency (%)', data:[90,85,92,95], backgroundColor:['rgba(0,188,212,0.6)','rgba(139,92,246,0.6)','rgba(16,185,129,0.6)','rgba(245,158,11,0.6)'], borderRadius:6, borderWidth:0 }]
+      },
+      options:{ responsive:true, maintainAspectRatio:false, scales:{ y:{ beginAtZero:true, max:100, grid:{ color:'rgba(255,255,255,0.05)' } }, x:{ grid:{ display:false } } }, plugins:{ legend:{ display:false } } }
+    });
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>

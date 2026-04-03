@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact | Onco-Ally</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .page-hero { position:relative; padding:6em 0 4em; text-align:center; background:linear-gradient(135deg,#050d1f 0%,#0a1a3a 50%,#0d2a5e 100%); overflow:hidden; }
+    .page-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 50% 60%,rgba(0,188,212,0.1) 0%,transparent 60%); }
+    .page-hero-content { position:relative; z-index:1; }
+    .page-hero h2 { font-size:clamp(2.2em,5vw,3.5em); font-weight:800; color:#fff; letter-spacing:-0.03em; margin-bottom:0.4em; }
+    .page-hero p { color:rgba(255,255,255,0.55); font-size:1.1em; max-width:500px; margin:0 auto; }
+
+    .contact-main { padding: 5em 0; }
+
+    .offices-section { margin-bottom: 5em; }
+    .offices-section h3 { font-size:1.5em; font-weight:700; color:#fff; margin-bottom:0.4em; }
+
+    .office-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1.25em; margin-top:2em; }
+    .office-card {
+      background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+      border-radius:16px; padding:1.75em; transition:all 0.3s;
+    }
+    .office-card:hover { border-color:rgba(0,188,212,0.3); transform:translateY(-4px); background:rgba(0,188,212,0.04); }
+    .office-card h4 { font-size:1em; font-weight:700; color:#fff; margin-bottom:0.6em; display:flex; align-items:center; gap:0.4em; }
+    .office-card h4 ion-icon { color:#00BCD4; }
+    .office-card p { font-size:0.85em; color:rgba(255,255,255,0.5); line-height:1.7; }
+    .office-card p + p { margin-top:0.5em; }
+
+    .partners-section h3 { font-size:1.5em; font-weight:700; color:#fff; margin-bottom:0.4em; }
+    .partners-section > p { color:rgba(255,255,255,0.5); font-size:0.97em; margin-bottom:2em; }
+
+    .partner-cards-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1.25em; }
+    .partner-card {
+      background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+      border-radius:16px; padding:1.75em 1.5em; text-align:center; transition:all 0.3s;
+    }
+    .partner-card:hover { border-color:rgba(0,188,212,0.25); transform:translateY(-4px); }
+    .partner-card ion-icon { font-size:2em; color:#00BCD4; display:block; margin-bottom:0.7em; filter:drop-shadow(0 0 8px rgba(0,188,212,0.3)); }
+    .partner-card h4 { font-size:0.97em; font-weight:700; color:#fff; margin-bottom:0.4em; }
+    .partner-card p { font-size:0.82em; color:rgba(255,255,255,0.5); line-height:1.65; }
+
+    .section-divider-line { height:1px; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.08),transparent); margin:4em 0; }
+  </style>
+</head>
+<body>
+  <header class="main-header" id="main-header">
+    <div class="container header-inner">
+      <div class="logo">
+        <img src="images/onco-ally-logo.png" alt="Onco-Ally Logo" class="logo-img">
+        <h1>Onco-Ally</h1>
+      </div>
+      <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span></button>
+      <nav id="site-nav" class="site-nav"><ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="forpatients.html">For Patients</a></li>
+        <li><a href="forproviders.html">For Providers</a></li>
+        <li><a href="forpartners.html">For Partners</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="leadership.html">Leadership</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+        <li><a href="rnd.html">MIT Learnings</a></li>
+      </ul></nav>
+      <div class="header-actions">
+        <a href="login.html" class="button-signin">Login</a>
+        <a href="signup.html" class="button-signup">Sign Up</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="page-hero">
+    <div class="container page-hero-content fade-in">
+      <span class="section-eyebrow">Get In Touch</span>
+      <h2>Contact Onco-Ally</h2>
+      <p>We'd love to hear from you. Whether you're a patient, provider, or partner — our team is here to help.</p>
+    </div>
+  </section>
+
+  <main class="contact-main">
+    <div class="container">
+      <section class="offices-section">
+        <div class="reveal">
+          <span class="section-eyebrow">Global Presence</span>
+          <h3>Our Offices Worldwide</h3>
+        </div>
+        <div class="office-grid">
+          <div class="office-card reveal">
+            <h4><ion-icon name="location-outline"></ion-icon> Boston, USA</h4>
+            <p>123 Innovation Drive<br>Boston, MA 02115</p>
+            <p>+1 (617) 555-1234</p>
+          </div>
+          <div class="office-card reveal" style="transition-delay:0.07s">
+            <h4><ion-icon name="location-outline"></ion-icon> Mumbai, India</h4>
+            <p>4th Floor, Tech Park<br>Mumbai, 400001</p>
+            <p>+91 22 5555 1234</p>
+          </div>
+          <div class="office-card reveal" style="transition-delay:0.14s">
+            <h4><ion-icon name="location-outline"></ion-icon> Vienna, Austria</h4>
+            <p>Ringstrasse 12<br>Vienna, 1010</p>
+            <p>+43 1 5555 5678</p>
+          </div>
+          <div class="office-card reveal" style="transition-delay:0.21s">
+            <h4><ion-icon name="location-outline"></ion-icon> Napa Valley, USA</h4>
+            <p>Winery Lane 45<br>Napa, CA 94558</p>
+            <p>+1 (707) 555-7890</p>
+          </div>
+          <div class="office-card reveal" style="transition-delay:0.28s">
+            <h4><ion-icon name="location-outline"></ion-icon> Denver, USA</h4>
+            <p>500 Tech Blvd<br>Denver, CO 80202</p>
+            <p>+1 (303) 555-4567</p>
+          </div>
+          <div class="office-card reveal" style="transition-delay:0.35s">
+            <h4><ion-icon name="location-outline"></ion-icon> Jersey, UK</h4>
+            <p>Innovation House<br>St. Helier, JE2 3RP</p>
+            <p>+44 1534 555555</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider-line"></div>
+
+      <section class="partners-section">
+        <div class="reveal">
+          <span class="section-eyebrow">Collaborations</span>
+          <h3>Our Strategic Partnerships</h3>
+          <p>We partner with leading organizations to transform cancer care and drive innovation.</p>
+        </div>
+        <div class="partner-cards-grid">
+          <div class="partner-card reveal"><ion-icon name="people-circle-outline"></ion-icon><h4>Doctor Agencies</h4><p>Partnering with top medical staffing agencies to ensure every patient gets specialized care.</p></div>
+          <div class="partner-card reveal" style="transition-delay:0.08s"><ion-icon name="briefcase-outline"></ion-icon><h4>Cancer Centers</h4><p>Collaborating with renowned oncology institutes globally for integrated treatment plans.</p></div>
+          <div class="partner-card reveal" style="transition-delay:0.16s"><ion-icon name="server-outline"></ion-icon><h4>EMR Systems</h4><p>Seamless integration with leading EMR platforms for real-time data exchange.</p></div>
+          <div class="partner-card reveal" style="transition-delay:0.24s"><ion-icon name="hardware-chip-outline"></ion-icon><h4>AI Teams</h4><p>Driving innovation with advanced analytics and predictive modeling in oncology.</p></div>
+          <div class="partner-card reveal" style="transition-delay:0.32s"><ion-icon name="cloud-outline"></ion-icon><h4>Cloud Providers</h4><p>Ensuring scalable, secure, and robust infrastructure for global health data management.</p></div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div class="footer-brand"><img src="images/onco-ally-logo.png" alt="" style="width:24px;height:24px;border-radius:6px;opacity:0.7;"> &copy; 2026 Onco-Ally — MIT CTO Impact Project</div>
+      <div class="footer-links"><a href="index.html">Home</a><a href="rnd.html">MIT Learnings</a><a href="careers.html">Careers</a></div>
+    </div>
+  </footer>
+  <script>
+    window.addEventListener('scroll', () => { document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 60); });
+    const obs = new IntersectionObserver(e => e.forEach(en => { if(en.isIntersecting){ en.target.classList.add('visible'); obs.unobserve(en.target); }}), {threshold:0.1});
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Onco-Ally — MIT CTO Impact Project</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Onco-Ally — MIT CTO Impact Project. AI-powered oncology platform personalizing cancer care for everyone, everywhere.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Ionicons -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    /* ---- MIT Badge ---- */
+    .mit-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5em;
+      background: linear-gradient(135deg, rgba(163,31,52,0.2) 0%, rgba(163,31,52,0.1) 100%);
+      border: 1px solid rgba(163,31,52,0.4);
+      color: #ff6b6b;
+      font-size: 0.73em;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3em 0.8em;
+      border-radius: 9999px;
+    }
+
+    /* ---- Section divider ---- */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+      margin: 0;
+    }
+
+    /* ---- Features Grid ---- */
+    .features-section {
+      padding: 6em 0;
+    }
+
+    .features-section .section-header {
+      text-align: center;
+      margin-bottom: 3.5em;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5em;
+    }
+
+    .feature-card {
+      background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 2em;
+      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gradient);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255,255,255,0.18);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+    }
+
+    .feature-card:hover::before {
+      opacity: 1;
+    }
+
+    .feature-card[data-accent="teal"] { --gradient: linear-gradient(90deg, #00BCD4, #26C6DA); --icon-bg: rgba(0,188,212,0.12); --icon-color: #26C6DA; }
+    .feature-card[data-accent="blue"] { --gradient: linear-gradient(90deg, #1565C0, #42A5F5); --icon-bg: rgba(21,101,192,0.15); --icon-color: #42A5F5; }
+    .feature-card[data-accent="purple"] { --gradient: linear-gradient(90deg, #7C3AED, #A78BFA); --icon-bg: rgba(124,58,237,0.15); --icon-color: #A78BFA; }
+    .feature-card[data-accent="green"] { --gradient: linear-gradient(90deg, #059669, #34D399); --icon-bg: rgba(5,150,105,0.15); --icon-color: #34D399; }
+    .feature-card[data-accent="orange"] { --gradient: linear-gradient(90deg, #D97706, #FCD34D); --icon-bg: rgba(217,119,6,0.15); --icon-color: #FCD34D; }
+    .feature-card[data-accent="pink"] { --gradient: linear-gradient(90deg, #DB2777, #F472B6); --icon-bg: rgba(219,39,119,0.12); --icon-color: #F472B6; }
+
+    .feature-icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--icon-bg);
+      color: var(--icon-color);
+      font-size: 1.5em;
+      margin-bottom: 1.2em;
+    }
+
+    .feature-card h4 {
+      font-size: 1.05em;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.6em;
+      letter-spacing: -0.01em;
+    }
+
+    .feature-card p {
+      font-size: 0.88em;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.7;
+    }
+
+    /* ---- Mission Strip ---- */
+    .mission-strip {
+      padding: 5em 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mission-strip::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(13,71,161,0.25) 0%, rgba(0,188,212,0.1) 100%);
+    }
+
+    .mission-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4em;
+      align-items: center;
+    }
+
+    .mission-content h2 {
+      font-size: clamp(1.8em, 3vw, 2.5em);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 0.75em;
+    }
+
+    .mission-content p {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.97em;
+      line-height: 1.8;
+      margin-bottom: 1.5em;
+    }
+
+    .mission-visual {
+      position: relative;
+    }
+
+    .mission-img {
+      border-radius: 20px;
+      width: 100%;
+      max-height: 380px;
+      object-fit: cover;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .mission-badge {
+      position: absolute;
+      bottom: -20px;
+      left: 30px;
+      background: linear-gradient(135deg, #0D47A1, #1565C0);
+      border: 1px solid rgba(0,188,212,0.3);
+      border-radius: 14px;
+      padding: 1em 1.5em;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+
+    .mission-badge .badge-number {
+      font-size: 1.8em;
+      font-weight: 800;
+      background: linear-gradient(135deg, #00BCD4 0%, #fff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+
+    .mission-badge .badge-text {
+      font-size: 0.75em;
+      color: rgba(255,255,255,0.6);
+      margin-top: 0.2em;
+    }
+
+    /* ---- Partners / Org logos ---- */
+    .partners-section {
+      padding: 4em 0;
+      text-align: center;
+    }
+
+    .partners-label {
+      font-size: 0.75em;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 2em;
+    }
+
+    .partners-grid {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2.5em;
+      flex-wrap: wrap;
+    }
+
+    .partner-pill {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 999px;
+      padding: 0.6em 1.5em;
+      font-size: 0.85em;
+      font-weight: 600;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.03em;
+      transition: all 0.25s ease;
+    }
+
+    .partner-pill:hover {
+      border-color: rgba(0,188,212,0.3);
+      color: rgba(255,255,255,0.7);
+      background: rgba(0,188,212,0.05);
+    }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 1024px) {
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      .mission-inner {
+        grid-template-columns: 1fr;
+        gap: 2em;
+      }
+      .mission-visual {
+        order: -1;
+      }
+      .mission-badge {
+        bottom: -15px;
+        left: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="main-header" id="main-header">
+    <div class="container header-inner">
+      <div class="logo">
+        <img src="images/onco-ally-logo.png" alt="Onco-Ally Logo" class="logo-img">
+        <h1>Onco-Ally</h1>
+      </div>
+      <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span></button>
+      <nav id="site-nav" class="site-nav">
+        <ul>
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="forpatients.html">For Patients</a></li>
+          <li><a href="forproviders.html">For Providers</a></li>
+          <li><a href="forpartners.html">For Partners</a></li>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="leadership.html">Leadership</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="rnd.html">MIT Learnings</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <a href="login.html" class="button-signin">Login</a>
+        <a href="signup.html" class="button-signup">Sign Up</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-orb hero-orb-3"></div>
+
+    <div class="container hero-content">
+      <div class="hero-text fade-in">
+        <p class="project-tagline-hero">MIT CTO Impact Project</p>
+        <div class="hero-badges-row">
+          <span class="hero-badge">AI-Powered Oncology</span>
+        </div>
+        <h2 class="bigger-hero-title">
+          Because <span class="gradient-word">No One</span><br>
+          Fights Alone
+        </h2>
+        <p class="bigger-hero-subtitle">
+          Personalizing cancer care for everyone, everywhere — through intelligent AI, wearable tech, and human compassion.
+        </p>
+        <div class="hero-cta-group">
+          <a href="movement.html" class="button-join">
+            <ion-icon name="heart-outline"></ion-icon>
+            Join the Movement
+          </a>
+          <a href="rnd.html" class="button-secondary">
+            <ion-icon name="flask-outline"></ion-icon>
+            Explore MIT Learnings
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-image-box fade-in delay-2">
+        <img src="images/patient.jpg" alt="Cancer Care Patient" class="hero-image">
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS STRIP -->
+  <section class="stats-strip fade-in delay-3">
+    <div class="container">
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-number">18M+</div>
+          <div class="stat-label">New Cancer Cases/Year</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">4.7x</div>
+          <div class="stat-label">Better Outcomes w/ AI</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">97%</div>
+          <div class="stat-label">Patient Satisfaction</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">50+</div>
+          <div class="stat-label">Research Milestones</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">7</div>
+          <div class="stat-label">MIT Learnings Modules</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- PROBLEM & SOLUTION -->
+  <section class="problem-solution">
+    <div class="container">
+      <div class="section-header" style="text-align:center; margin-bottom:3em;">
+        <span class="section-eyebrow">The Challenge &amp; Our Answer</span>
+        <h2 class="section-title">Reimagining Cancer Care<br>from the Ground Up</h2>
+      </div>
+      <div class="cards-row">
+        <div class="card reveal">
+          <div class="card-icon-wrap problem">
+            <ion-icon name="warning-outline"></ion-icon>
+          </div>
+          <h3>The Problem</h3>
+          <p>
+            Today's cancer care is fragmented — patients struggle with complex treatment regimens, delayed diagnostics, and communication barriers.
+            Providers face outdated systems, incomplete data, and limited real-time insights that cost precious time.
+          </p>
+        </div>
+        <div class="card reveal" style="transition-delay:0.15s">
+          <div class="card-icon-wrap solution">
+            <ion-icon name="bulb-outline"></ion-icon>
+          </div>
+          <h3>Our Innovative Solution</h3>
+          <p>
+            Onco-Ally integrates advanced AI analytics, wearable technology, and multilingual support into one unified platform —
+            providing real-time insights and personalized treatment recommendations that empower patients and providers alike.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- MISSION SECTION -->
+  <section class="mission-strip">
+    <div class="container">
+      <div class="mission-inner">
+        <div class="mission-content reveal">
+          <span class="section-eyebrow">Our Mission</span>
+          <h2>A Bold Move from MIT Professionals</h2>
+          <p>
+            Built by a team of MIT innovators, Onco-Ally represents a convergence of systems engineering,
+            machine learning, and deep compassion for patients. We don't just build software — we build hope.
+          </p>
+          <p>
+            From concept to cloud, our MIT Learnings work ensures every feature is evidence-based,
+            clinically sound, and designed with real patient journeys in mind.
+          </p>
+          <a href="about.html" class="button-secondary" style="display:inline-flex; align-items:center; gap:0.5em;">
+            <ion-icon name="arrow-forward-outline"></ion-icon>
+            Learn Our Story
+          </a>
+        </div>
+        <div class="mission-visual reveal" style="transition-delay:0.2s">
+          <img src="images/provider.jpg" alt="Onco-Ally Provider Dashboard" class="mission-img">
+          <div class="mission-badge">
+            <div class="badge-number">MIT</div>
+            <div class="badge-text">Grade Research</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- FEATURES SECTION -->
+  <section class="features-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-eyebrow">Platform Capabilities</span>
+        <h2 class="section-title">Everything in One<br>Intelligent Platform</h2>
+        <p class="section-subtitle" style="margin-top:0.5em;">
+          Six pillars of innovation working together to deliver oncology care that's smarter, faster, and more human.
+        </p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card reveal" data-accent="teal">
+          <div class="feature-icon">
+            <ion-icon name="people-outline"></ion-icon>
+          </div>
+          <h4>Patient Empowerment</h4>
+          <p>Personalized dashboards that give patients ownership over their care journey with real-time data and support.</p>
+        </div>
+        <div class="feature-card reveal" data-accent="blue" style="transition-delay:0.08s">
+          <div class="feature-icon">
+            <ion-icon name="medkit-outline"></ion-icon>
+          </div>
+          <h4>Provider Intelligence</h4>
+          <p>Real-time patient data, AI-assisted diagnostics, and integrated EMR systems so providers can focus on what matters.</p>
+        </div>
+        <div class="feature-card reveal" data-accent="purple" style="transition-delay:0.16s">
+          <div class="feature-icon">
+            <ion-icon name="hardware-chip-outline"></ion-icon>
+          </div>
+          <h4>AI &amp; Machine Learning</h4>
+          <p>Predictive analytics that anticipate complications, optimize treatment plans, and continuously learn from outcomes.</p>
+        </div>
+        <div class="feature-card reveal" data-accent="green" style="transition-delay:0.24s">
+          <div class="feature-icon">
+            <ion-icon name="server-outline"></ion-icon>
+          </div>
+          <h4>EMR Integration</h4>
+          <p>Seamless bi-directional integration with leading electronic medical record systems — no workflow disruption.</p>
+        </div>
+        <div class="feature-card reveal" data-accent="orange" style="transition-delay:0.32s">
+          <div class="feature-icon">
+            <ion-icon name="cloud-outline"></ion-icon>
+          </div>
+          <h4>Cloud Infrastructure</h4>
+          <p>HIPAA-compliant, scalable cloud architecture ensuring 99.99% uptime and enterprise-grade security worldwide.</p>
+        </div>
+        <div class="feature-card reveal" data-accent="pink" style="transition-delay:0.4s">
+          <div class="feature-icon">
+            <ion-icon name="language-outline"></ion-icon>
+          </div>
+          <h4>Multilingual Support</h4>
+          <p>Breaking down language barriers with intelligent translation so every patient receives care in their native language.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ICON SECTION (Strategic Pillars) -->
+  <section class="icon-section">
+    <div class="container">
+      <div class="icon-section-header reveal">
+        <span class="section-eyebrow">Ecosystem</span>
+        <h2 class="section-title">Our Strategic Partnerships</h2>
+        <p class="section-subtitle" style="margin-top:0.5em; margin-left:auto; margin-right:auto; text-align:center;">
+          We collaborate with industry leaders to build a comprehensive ecosystem — bridging gaps in communication, remote care, and data-driven decisions.
+        </p>
+      </div>
+      <div class="icon-row">
+        <div class="icon-card reveal">
+          <ion-icon name="people-outline"></ion-icon>
+          <h4>Patients</h4>
+          <p>Empowering individuals to own and manage their care journey with clarity.</p>
+        </div>
+        <div class="icon-card reveal" style="transition-delay:0.08s">
+          <ion-icon name="medkit-outline"></ion-icon>
+          <h4>Providers</h4>
+          <p>Real-time patient data and integrated EMR systems for faster decisions.</p>
+        </div>
+        <div class="icon-card reveal" style="transition-delay:0.16s">
+          <ion-icon name="server-outline"></ion-icon>
+          <h4>EMR Systems</h4>
+          <p>Seamless integration with leading electronic medical records platforms.</p>
+        </div>
+        <div class="icon-card reveal" style="transition-delay:0.24s">
+          <ion-icon name="analytics-outline"></ion-icon>
+          <h4>AI &amp; Analytics</h4>
+          <p>Cutting-edge intelligence for predictive, personalized oncology care.</p>
+        </div>
+        <div class="icon-card reveal" style="transition-delay:0.32s">
+          <ion-icon name="cloud-outline"></ion-icon>
+          <h4>Cloud Infrastructure</h4>
+          <p>Scalable, secure, and robust data management trusted worldwide.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- PARTNERS LOGOS -->
+  <section class="partners-section">
+    <div class="container">
+      <div class="partners-label reveal">Trusted by and built alongside leading institutions</div>
+      <div class="partners-grid reveal" style="transition-delay:0.1s">
+        <div class="partner-pill">MIT Media Lab</div>
+        <div class="partner-pill">Dana-Farber</div>
+        <div class="partner-pill">AWS Health</div>
+        <div class="partner-pill">Epic EMR</div>
+        <div class="partner-pill">NIH</div>
+        <div class="partner-pill">ACS</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- CTA SECTION -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-inner reveal">
+        <h2>Ready to Transform<br>Cancer Care?</h2>
+        <p>Join thousands of patients, providers, and innovators in building a future where no one fights cancer alone.</p>
+        <div style="display:flex; gap:1em; justify-content:center; flex-wrap:wrap; position:relative;">
+          <a href="movement.html" class="button-join">
+            <ion-icon name="heart-outline"></ion-icon>
+            Join the Movement
+          </a>
+          <a href="rnd.html" class="button-secondary" style="border-color:rgba(255,255,255,0.25);">
+            <ion-icon name="flask-outline"></ion-icon>
+            View MIT Learnings
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <img src="images/onco-ally-logo.png" alt="" style="width:24px; height:24px; border-radius:6px; opacity:0.7;">
+        &copy; 2026 Onco-Ally — MIT CTO Impact Project
+      </div>
+      <div class="footer-links">
+        <a href="about.html">About</a>
+        <a href="rnd.html">MIT Learnings</a>
+        <a href="contact.html">Contact</a>
+        <a href="careers.html">Careers</a>
+      </div>
+      <p class="views">Views: <span id="viewsCount">0</span></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Page views
+    document.addEventListener('DOMContentLoaded', function () {
+      let count = localStorage.getItem('pageViews') || 0;
+      count = parseInt(count) + 1;
+      localStorage.setItem('pageViews', count);
+      document.getElementById('viewsCount').textContent = count;
+    });
+
+    // Header scroll effect
+    window.addEventListener('scroll', function () {
+      const header = document.getElementById('main-header');
+      if (window.scrollY > 60) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Reveal on scroll (Intersection Observer)
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    reveals.forEach(el => observer.observe(el));
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>

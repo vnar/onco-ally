@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Provider Dashboard | Onco-Ally</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    :root { --bg:#0a0f1e; --surface2:rgba(255,255,255,0.04); --border:rgba(255,255,255,0.08); --accent:#00BCD4; --text-muted:rgba(255,255,255,0.5); --text-dim:rgba(255,255,255,0.25); }
+    body { font-family:'Inter',sans-serif; background:var(--bg); color:#fff; line-height:1.6; }
+    header { background:rgba(10,15,30,0.95); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); padding:0.85em 0; position:sticky; top:0; z-index:100; }
+    .header-inner { max-width:1400px; margin:0 auto; padding:0 1.5em; display:flex; align-items:center; justify-content:space-between; gap:1em; flex-wrap:wrap; }
+    .logo-text { font-size:1.2em; font-weight:700; background:linear-gradient(90deg,#fff,#00BCD4); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    nav ul { list-style:none; display:flex; gap:0.15em; }
+    nav ul li a { color:rgba(255,255,255,0.6); font-size:0.85em; font-weight:500; padding:0.4em 0.8em; border-radius:8px; transition:all 0.2s; text-decoration:none; }
+    nav ul li a:hover, nav ul li a.active { color:#fff; background:rgba(255,255,255,0.08); }
+    .header-actions { display:flex; gap:0.5em; }
+    .icon-btn { background:none; border:1px solid var(--border); color:rgba(255,255,255,0.6); cursor:pointer; border-radius:10px; width:36px; height:36px; display:flex; align-items:center; justify-content:center; font-size:1.1em; transition:all 0.2s; text-decoration:none; }
+    .icon-btn:hover { background:rgba(255,255,255,0.08); color:#fff; }
+
+    main { max-width:1400px; margin:0 auto; padding:2em 1.5em; }
+    .dash-header { margin-bottom:2em; }
+    .dash-header h2 { font-size:1.6em; font-weight:800; letter-spacing:-0.02em; }
+    .dash-header p { color:var(--text-muted); font-size:0.9em; margin-top:0.2em; }
+
+    .search-bar { display:flex; gap:0.75em; margin-bottom:2em; }
+    .search-bar input { flex:1; background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:12px; padding:0.75em 1em; font-family:inherit; font-size:0.9em; color:#fff; outline:none; transition:all 0.2s; }
+    .search-bar input::placeholder { color:rgba(255,255,255,0.3); }
+    .search-bar input:focus { border-color:rgba(0,188,212,0.4); background:rgba(0,188,212,0.04); }
+    .search-bar button { background:linear-gradient(135deg,#00BCD4,#26C6DA); color:#0a0f1e; border:none; border-radius:12px; padding:0.75em 1.5em; font-family:inherit; font-size:0.9em; font-weight:700; cursor:pointer; transition:all 0.2s; }
+    .search-bar button:hover { transform:translateY(-1px); box-shadow:0 4px 14px rgba(0,188,212,0.4); }
+
+    .dashboard-container { display:grid; grid-template-columns:1fr 380px; gap:1.5em; }
+    @media(max-width:900px){ .dashboard-container{ grid-template-columns:1fr; } }
+
+    .section { background:var(--surface2); border:1px solid var(--border); border-radius:18px; padding:1.5em; margin-bottom:1.5em; }
+    .section:hover { border-color:rgba(255,255,255,0.14); }
+    .section h3 { font-size:0.9em; font-weight:700; color:rgba(255,255,255,0.7); letter-spacing:0.04em; text-transform:uppercase; margin-bottom:1em; display:flex; align-items:center; gap:0.5em; }
+    .section h3 ion-icon { color:var(--accent); font-size:1.1em; }
+    .graph-container { position:relative; height:220px; margin-top:1.25em; }
+
+    /* Patient table */
+    .patient-table { width:100%; border-collapse:collapse; margin-top:0.75em; }
+    .patient-table th { font-size:0.72em; font-weight:600; color:var(--text-dim); letter-spacing:0.08em; text-transform:uppercase; padding:0.6em 0.75em; text-align:left; border-bottom:1px solid var(--border); }
+    .patient-table td { font-size:0.85em; color:var(--text-muted); padding:0.75em; border-bottom:1px solid rgba(255,255,255,0.04); }
+    .patient-table tr:hover td { background:rgba(255,255,255,0.02); }
+    .patient-table td:first-child { color:#fff; font-weight:600; }
+    .status-good { color:#34D399; font-weight:700; }
+    .status-review { color:#F59E0B; font-weight:700; }
+    .adherence-good { color:#34D399; font-weight:700; }
+    .adherence-warn { color:#F87171; font-weight:700; }
+
+    .chatbot-container { background:var(--surface2); border:1px solid var(--border); border-radius:18px; padding:1.25em; margin-bottom:1.5em; }
+    .chatbot-header { display:flex; align-items:center; gap:0.5em; border-bottom:1px solid var(--border); padding-bottom:0.75em; margin-bottom:0.75em; }
+    .chatbot-header strong { font-size:0.9em; color:#fff; }
+    .chatbot-header ion-icon { color:var(--accent); font-size:1.2em; }
+    .chatbot-messages { height:180px; overflow-y:auto; padding:0.5em; margin-bottom:0.75em; scrollbar-width:thin; scrollbar-color:rgba(0,188,212,0.3) transparent; }
+    .chat-msg { font-size:0.82em; margin-bottom:0.6em; line-height:1.6; color:var(--text-muted); }
+    .chat-msg.user { color:rgba(255,255,255,0.8); text-align:right; }
+    .chatbot-input { display:flex; gap:0.5em; }
+    .chatbot-input input { flex:1; background:rgba(255,255,255,0.06); border:1px solid var(--border); border-radius:10px; padding:0.6em 0.9em; font-family:inherit; font-size:0.85em; color:#fff; outline:none; transition:all 0.2s; }
+    .chatbot-input input:focus { border-color:rgba(0,188,212,0.4); }
+    .chatbot-input input::placeholder { color:rgba(255,255,255,0.25); }
+    .chatbot-input button { background:linear-gradient(135deg,var(--accent),#26C6DA); color:#0a0f1e; border:none; border-radius:10px; padding:0.6em 1em; font-family:inherit; font-size:0.85em; font-weight:700; cursor:pointer; transition:all 0.2s; }
+    .chatbot-input button:hover { transform:translateY(-1px); box-shadow:0 4px 14px rgba(0,188,212,0.4); }
+    .pdf-embed { width:100%; height:280px; border:none; border-radius:10px; margin-top:0.75em; }
+    .section p { font-size:0.88em; color:var(--text-muted); }
+    footer { background:rgba(5,10,20,0.95); border-top:1px solid var(--border); text-align:center; padding:1.5em 0; font-size:0.82em; color:var(--text-dim); margin-top:2em; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="logo-text">Onco-Ally</div>
+      <nav><ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="providers.html" class="active">Dashboard</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul></nav>
+      <div class="header-actions">
+        <button class="icon-btn" onclick="toggleDarkMode()" title="Toggle Dark Mode"><ion-icon name="moon-outline"></ion-icon></button>
+        <a href="logout.html" class="icon-btn" title="Logout"><ion-icon name="log-out-outline"></ion-icon></a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="dash-header">
+      <h2>Provider Dashboard</h2>
+      <p><strong>Dr. Jacquillen Smith</strong> — Managing patients with Stage IV Prostate Cancer</p>
+    </div>
+
+    <div class="search-bar">
+      <input type="text" placeholder="Search patients by name, ID, or condition..." id="searchInput">
+      <button onclick="alert('Filter functionality coming soon!')"><ion-icon name="search-outline" style="font-size:1em;"></ion-icon> Search</button>
+    </div>
+
+    <div class="dashboard-container">
+      <div class="left-column">
+
+        <div class="section">
+          <h3><ion-icon name="bar-chart-outline"></ion-icon> Patient Overview</h3>
+          <p style="font-size:0.85em; color:rgba(255,255,255,0.4);">Adherence summary for all patients in your center</p>
+          <div class="graph-container"><canvas id="overviewChart"></canvas></div>
+        </div>
+
+        <div class="section">
+          <h3><ion-icon name="people-outline"></ion-icon> Patient List</h3>
+          <table class="patient-table" id="patientTable">
+            <thead>
+              <tr>
+                <th>Patient</th><th>Last Check</th><th>Adherence</th><th>Vitals</th><th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>John Doe</td><td>Apr 18, 2025</td>
+                <td class="adherence-good">93%</td>
+                <td style="color:rgba(255,255,255,0.6);">Stable</td>
+                <td class="status-good">Good</td>
+              </tr>
+              <tr>
+                <td>Mark Smith</td><td>Apr 17, 2025</td>
+                <td class="adherence-good">90%</td>
+                <td style="color:rgba(255,255,255,0.6);">Stable</td>
+                <td class="status-good">Good</td>
+              </tr>
+              <tr>
+                <td>Alex Johnson</td><td>Apr 16, 2025</td>
+                <td class="adherence-warn">85%</td>
+                <td style="color:#F59E0B;">Unstable</td>
+                <td class="status-review">Review</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <div class="right-column">
+        <div class="chatbot-container">
+          <div class="chatbot-header">
+            <ion-icon name="chatbubbles-outline"></ion-icon>
+            <strong>OncoChat</strong>
+            <span style="margin-left:auto; font-size:0.72em; background:rgba(52,211,153,0.1); border:1px solid rgba(52,211,153,0.2); border-radius:999px; padding:0.15em 0.6em; color:#34D399;">Online</span>
+          </div>
+          <div class="chatbot-messages" id="chatbotMessages">
+            <div class="chat-msg">OncoChat: Welcome, Dr. Smith! Ask about patient data, EMR updates, or scheduling.</div>
+            <div class="chat-msg">OncoChat: Try "What is John Doe's latest blood work?"</div>
+          </div>
+          <div class="chatbot-input">
+            <input type="text" id="chatbotInput" placeholder="Ask your question..." onkeydown="if(event.key==='Enter')sendChat()">
+            <button onclick="sendChat()">Send</button>
+          </div>
+        </div>
+
+        <div class="section">
+          <h3><ion-icon name="document-text-outline"></ion-icon> Detailed EMR Report</h3>
+          <p>Complete medical records for your patients:</p>
+          <embed src="emr-report.pdf" type="application/pdf" class="pdf-embed">
+          <p style="font-size:0.78em; color:rgba(255,255,255,0.25); margin-top:0.5em;"><em>Ensure emr-report.pdf is in your folder for full view.</em></p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>&copy; 2025 Onco-Ally &nbsp;·&nbsp; Demo Version — No real patient data stored.</footer>
+
+  <script>
+    function toggleDarkMode() { document.body.style.background = document.body.style.background === 'rgb(4, 8, 15)' ? '#0a0f1e' : '#04080f'; }
+
+    Chart.defaults.color = 'rgba(255,255,255,0.45)';
+    Chart.defaults.borderColor = 'rgba(255,255,255,0.06)';
+
+    const overviewCtx = document.getElementById('overviewChart')?.getContext('2d');
+    if (overviewCtx) {
+      new Chart(overviewCtx, {
+        type:'bar',
+        data:{
+          labels:['John Doe','Mark Smith','Alex Johnson'],
+          datasets:[{ label:'Adherence (%)', data:[93,90,85], backgroundColor:['rgba(52,211,153,0.6)','rgba(52,211,153,0.6)','rgba(248,113,113,0.6)'], borderRadius:8, borderWidth:0 }]
+        },
+        options:{ responsive:true, maintainAspectRatio:false, scales:{ y:{beginAtZero:true, suggestedMax:100, grid:{color:'rgba(255,255,255,0.04)'}}, x:{grid:{display:false}} }, plugins:{legend:{display:false}} }
+      });
+    }
+
+    function sendChat() {
+      const input = document.getElementById('chatbotInput');
+      const messages = document.getElementById('chatbotMessages');
+      if (!input || !messages || !input.value.trim()) return;
+      const userMessage = input.value.trim();
+      const userDiv = document.createElement('div');
+      userDiv.className = 'chat-msg user';
+      userDiv.textContent = userMessage;
+      messages.appendChild(userDiv);
+      setTimeout(() => {
+        const botDiv = document.createElement('div');
+        botDiv.className = 'chat-msg';
+        botDiv.textContent = 'OncoChat: ' + getChatbotResponse(userMessage);
+        messages.appendChild(botDiv);
+        messages.scrollTop = messages.scrollHeight;
+      }, 800);
+      input.value = '';
+    }
+
+    function getChatbotResponse(msg) {
+      const t = msg.toLowerCase();
+      if(t.includes('john doe') && t.includes('blood work')) return "John Doe's latest blood work indicates stable PSA and normal inflammation markers.";
+      if(t.includes('therapy')) return "John Doe's next therapy session is Apr 22, 2025, at 2:00 PM.";
+      if(t.includes('wearable')) return "Wearable data shows consistent vitals for Mark Smith and Alex Johnson. No alerts triggered.";
+      if(t.includes('adherence')) return "John Doe 93%, Mark Smith 90%, Alex Johnson 85% (needs review).";
+      if(t.includes('psa')) return "John Doe PSA stable at 4.2 ng/mL. Mark Smith at 3.8 ng/mL, also stable.";
+      return "Try asking about 'John Doe's blood work', 'therapy session', or 'adherence levels'.";
+    }
+  </script>
+</body>
+</html>

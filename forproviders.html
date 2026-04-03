@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>For Providers | Onco-Ally</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .page-hero { position:relative; padding:6em 0 4em; text-align:center; background:linear-gradient(135deg,#050d1f 0%,#0a1a3a 50%,#0d2a5e 100%); overflow:hidden; }
+    .page-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 50% 60%,rgba(0,188,212,0.12) 0%,transparent 60%); }
+    .page-hero-content { position:relative; z-index:1; }
+    .page-hero h2 { font-size:clamp(2.2em,5vw,3.5em); font-weight:800; color:#fff; letter-spacing:-0.03em; margin-bottom:0.4em; }
+    .page-hero p { color:rgba(255,255,255,0.55); font-size:1.1em; max-width:580px; margin:0 auto; line-height:1.75; }
+
+    .providers-main { padding: 5em 0; }
+
+    .features-grid-5 { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1.5em; margin-bottom:5em; }
+    .fp-card { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:18px; padding:2em; text-align:center; transition:all 0.3s; position:relative; overflow:hidden; }
+    .fp-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:var(--fc); opacity:0; transition:opacity 0.3s; }
+    .fp-card:hover { transform:translateY(-6px); border-color:rgba(255,255,255,0.15); box-shadow:0 20px 50px rgba(0,0,0,0.3); }
+    .fp-card:hover::before { opacity:1; }
+    .fp-card:nth-child(1){ --fc:linear-gradient(90deg,#00BCD4,#26C6DA); --ic:#00BCD4; }
+    .fp-card:nth-child(2){ --fc:linear-gradient(90deg,#8B5CF6,#A78BFA); --ic:#A78BFA; }
+    .fp-card:nth-child(3){ --fc:linear-gradient(90deg,#10B981,#34D399); --ic:#34D399; }
+    .fp-card:nth-child(4){ --fc:linear-gradient(90deg,#F59E0B,#FCD34D); --ic:#FCD34D; }
+    .fp-card:nth-child(5){ --fc:linear-gradient(90deg,#EF4444,#F87171); --ic:#F87171; }
+    .fp-icon { width:58px; height:58px; border-radius:16px; display:flex; align-items:center; justify-content:center; font-size:1.6em; margin:0 auto 1.2em; background:rgba(255,255,255,0.06); color:var(--ic); transition:all 0.3s; }
+    .fp-card:hover .fp-icon { background:rgba(255,255,255,0.1); transform:scale(1.1); }
+    .fp-card h3 { font-size:1.05em; font-weight:700; color:#fff; margin-bottom:0.6em; }
+    .fp-card p { font-size:0.86em; color:rgba(255,255,255,0.5); line-height:1.7; }
+
+    .info-section { padding:5em 0; border-top:1px solid rgba(255,255,255,0.06); }
+    .info-inner { display:grid; grid-template-columns:1fr 1fr; gap:4em; align-items:center; }
+    .info-text h2 { font-size:clamp(1.6em,3vw,2.2em); font-weight:800; color:#fff; letter-spacing:-0.02em; margin-bottom:0.75em; }
+    .info-text p { color:rgba(255,255,255,0.55); font-size:0.97em; line-height:1.85; }
+    .info-visual img { border-radius:20px; width:100%; box-shadow:0 20px 60px rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.1); }
+    @media(max-width:768px){ .info-inner{ grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <header class="main-header" id="main-header">
+    <div class="container header-inner">
+      <div class="logo">
+        <img src="images/onco-ally-logo.png" alt="Onco-Ally Logo" class="logo-img">
+        <h1>Onco-Ally</h1>
+      </div>
+      <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span></button>
+      <nav id="site-nav" class="site-nav"><ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="forpatients.html">For Patients</a></li>
+        <li><a href="forproviders.html" class="active">For Providers</a></li>
+        <li><a href="forpartners.html">For Partners</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="leadership.html">Leadership</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="rnd.html">MIT Learnings</a></li>
+      </ul></nav>
+      <div class="header-actions">
+        <a href="login.html" class="button-signin">Login</a>
+        <a href="signup.html" class="button-signup">Sign Up</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="page-hero">
+    <div class="container page-hero-content fade-in">
+      <span class="section-eyebrow">For Providers</span>
+      <h2>Smarter Tools for<br>Better Care</h2>
+      <p>Onco-Ally's provider portal empowers healthcare professionals with comprehensive digital tools — enabling data-driven decisions and real-time patient insights.</p>
+    </div>
+  </section>
+
+  <main class="providers-main">
+    <div class="container">
+      <div style="text-align:center; margin-bottom:3em;" class="reveal">
+        <span class="section-eyebrow">Platform Features</span>
+        <h2 class="section-title">Built for Clinical Excellence</h2>
+      </div>
+      <div class="features-grid-5">
+        <div class="fp-card reveal">
+          <div class="fp-icon"><ion-icon name="server-outline"></ion-icon></div>
+          <h3>Integrated EMR</h3>
+          <p>Seamlessly connect with leading EMR systems to access real-time patient data and streamline clinical workflows.</p>
+        </div>
+        <div class="fp-card reveal" style="transition-delay:0.08s">
+          <div class="fp-icon"><ion-icon name="pulse-outline"></ion-icon></div>
+          <h3>Real-Time Analytics</h3>
+          <p>Leverage advanced AI analytics to monitor patient metrics and optimize personalized treatment plans.</p>
+        </div>
+        <div class="fp-card reveal" style="transition-delay:0.16s">
+          <div class="fp-icon"><ion-icon name="build-outline"></ion-icon></div>
+          <h3>Workflow Automation</h3>
+          <p>Automate administrative tasks and documentation so you can focus more time on patient care.</p>
+        </div>
+        <div class="fp-card reveal" style="transition-delay:0.24s">
+          <div class="fp-icon"><ion-icon name="chatbubbles-outline"></ion-icon></div>
+          <h3>Enhanced Communication</h3>
+          <p>Communicate seamlessly with patients and colleagues through integrated secure messaging.</p>
+        </div>
+        <div class="fp-card reveal" style="transition-delay:0.32s">
+          <div class="fp-icon"><ion-icon name="shield-checkmark-outline"></ion-icon></div>
+          <h3>Data Security</h3>
+          <p>HIPAA-compliant infrastructure ensuring patient data is protected with enterprise-grade security.</p>
+        </div>
+      </div>
+
+      <section class="info-section">
+        <div class="info-inner">
+          <div class="info-visual reveal">
+            <img src="images/provider.jpg" alt="Provider Dashboard">
+          </div>
+          <div class="info-text reveal" style="transition-delay:0.15s">
+            <span class="section-eyebrow">MIT-Built</span>
+            <h2>How We Solve Provider Challenges</h2>
+            <p>
+              Developed by MIT professionals, Onco-Ally unifies fragmented cancer care by integrating advanced AI, seamless EMR integration,
+              and workflow automation. Our platform delivers actionable insights and robust security to empower providers with the tools they need.
+            </p>
+            <div style="margin-top:1.5em;">
+              <a href="login.html" class="button-join" style="display:inline-flex; align-items:center; gap:0.5em;">
+                <ion-icon name="log-in-outline"></ion-icon> Provider Login
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div class="footer-brand"><img src="images/onco-ally-logo.png" alt="" style="width:24px;height:24px;border-radius:6px;opacity:0.7;"> &copy; 2026 Onco-Ally — MIT CTO Impact Project</div>
+      <div class="footer-links"><a href="index.html">Home</a><a href="rnd.html">MIT Learnings</a><a href="contact.html">Contact</a></div>
+    </div>
+  </footer>
+  <script>
+    window.addEventListener('scroll', () => { document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 60); });
+    const obs = new IntersectionObserver(e => e.forEach(en => { if(en.isIntersecting){ en.target.classList.add('visible'); obs.unobserve(en.target); }}), {threshold:0.1});
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>

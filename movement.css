@@ -1,0 +1,282 @@
+/* ---------------- Global Reset & Base ---------------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #fff;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* ---------------- Container ---------------- */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1em;
+}
+
+/* ---------------- Header ---------------- */
+.main-header {
+  background-color: #0D47A1;
+  padding: 1em 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1em;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1em;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+.logo-img {
+  width: 36px;
+  height: 36px;
+}
+.logo h1 {
+  color: #fff;
+  font-size: 1.4em;
+  font-weight: 600;
+}
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1em;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+nav ul li a:hover,
+nav ul li a.active {
+  text-decoration: underline;
+}
+.header-actions {
+  display: flex;
+  gap: 0.5em;
+}
+.button-signin,
+.button-signup {
+  background: #FFC107;
+  color: #333;
+  padding: 0.4em 0.8em;
+  border-radius: 4px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.button-signin:hover,
+.button-signup:hover {
+  background: #FFB300;
+}
+
+/* ---------------- Hero Section ---------------- */
+.hero {
+  background: linear-gradient(to right, #0D47A1, #1565C0);
+  color: #fff;
+  text-align: center;
+  padding: 2em 1em;
+}
+.hero h2 {
+  font-size: 2em;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+}
+.hero p {
+  font-size: 1.1em;
+  line-height: 1.5;
+  color: #fff;
+  max-width: 700px;
+  margin: 0.5em auto;
+}
+
+/* ---------------- Sign Up Form Section ---------------- */
+.signup-section {
+  padding: 2em 1em;
+  text-align: center;
+}
+.form-card {
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 2em;
+  max-width: 600px;
+  margin: 0 auto;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.form-card h2 {
+  font-size: 1.8em;
+  color: #0D47A1;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+  text-align: center;
+}
+.subtitle {
+  font-size: 1em;
+  color: #555;
+  text-align: center;
+  margin-bottom: 1.5em;
+}
+
+/* ---------------- Form Input Groups ---------------- */
+.input-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1em;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0.5em;
+  background: #fff;
+}
+.input-group ion-icon {
+  font-size: 1.2em;
+  color: #0D47A1;
+  margin-right: 0.5em;
+}
+.input-group input,
+.input-group select,
+.input-group textarea {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 1em;
+  font-family: inherit;
+  color: #333;
+}
+.textarea-group textarea {
+  resize: vertical;
+}
+.button-submit {
+  background: #0D47A1;
+  color: #fff;
+  padding: 0.8em 2em;
+  border-radius: 4px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 1em;
+  width: 100%;
+}
+.button-submit:hover {
+  background: #1565C0;
+}
+
+/* ---------------- Icon Row (Optional) ---------------- */
+.icon-section {
+  padding: 2em 0;
+}
+.icon-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  justify-content: center;
+}
+.icon-card {
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 1em;
+  text-align: center;
+  flex: 1 1 200px;
+  max-width: 220px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+.icon-card:hover {
+  transform: scale(1.02);
+}
+.icon-card ion-icon {
+  font-size: 2em;
+  color: #0D47A1;
+  margin-bottom: 0.5em;
+}
+.icon-card h4 {
+  font-size: 1.1em;
+  margin-bottom: 0.3em;
+  color: #333;
+  font-weight: 600;
+}
+.icon-card p {
+  font-size: 0.95em;
+  color: #555;
+  line-height: 1.4;
+}
+
+/* ---------------- Footer ---------------- */
+footer {
+  background: #f8f9fa;
+  border-top: 1px solid #eee;
+  text-align: center;
+  padding: 1em 0;
+  margin-top: 2em;
+  font-size: 0.9em;
+  color: #666;
+}
+.footer-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1em;
+}
+
+/* ---------------- Fade-In Animations ---------------- */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+}
+.delay-1 { animation-delay: 0.3s; }
+.delay-2 { animation-delay: 0.6s; }
+.delay-3 { animation-delay: 0.9s; }
+.delay-4 { animation-delay: 1.2s; }
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* ---------------- Responsive Adjustments ---------------- */
+@media (max-width: 768px) {
+  .header-inner {
+    flex-wrap: wrap;
+    gap: 1em;
+  }
+  nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .hero h2 {
+    font-size: 1.8em;
+  }
+  .hero p {
+    font-size: 1em;
+  }
+  .form-card {
+    padding: 1.5em;
+    margin: 1em;
+  }
+  .input-group {
+    font-size: 0.95em;
+  }
+  .button-submit {
+    width: 100%;
+  }
+  .office-card, .partner-card, .icon-card {
+    width: 90%;
+    margin: 0.5em auto;
+  }
+}

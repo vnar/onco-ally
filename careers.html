@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Careers | Onco-Ally</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .page-hero {
+      position: relative; padding: 6em 0 4em; text-align: center;
+      background: linear-gradient(135deg, #050d1f 0%, #0a1a3a 50%, #0d2a5e 100%); overflow: hidden;
+    }
+    .page-hero::before {
+      content:''; position:absolute; inset:0;
+      background: radial-gradient(ellipse at 50% 60%, rgba(0,188,212,0.1) 0%, transparent 60%);
+    }
+    .page-hero-content { position:relative; z-index:1; }
+    .page-hero h2 { font-size: clamp(2.2em,5vw,3.5em); font-weight:800; color:#fff; letter-spacing:-0.03em; margin-bottom:0.4em; }
+    .page-hero p { color: rgba(255,255,255,0.55); font-size:1.1em; max-width:560px; margin:0 auto; }
+
+    .careers-main { padding: 5em 0; }
+
+    /* Values row */
+    .culture-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1.25em; margin-bottom:5em; }
+    .culture-card {
+      background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+      border-radius:16px; padding:1.75em 1.5em; text-align:center; transition:all 0.3s;
+    }
+    .culture-card:hover { border-color:rgba(0,188,212,0.3); transform:translateY(-4px); }
+    .culture-card ion-icon { font-size:2em; color:#00BCD4; display:block; margin-bottom:0.6em; }
+    .culture-card h4 { font-size:1em; font-weight:700; color:#fff; margin-bottom:0.4em; }
+    .culture-card p { font-size:0.84em; color:rgba(255,255,255,0.5); line-height:1.6; }
+
+    /* Jobs */
+    .jobs-header { text-align:center; margin-bottom:3em; }
+    .jobs-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:1.5em; }
+
+    .job-listing {
+      background:linear-gradient(135deg,rgba(255,255,255,0.05) 0%,rgba(255,255,255,0.02) 100%);
+      border:1px solid rgba(255,255,255,0.08); border-radius:18px; padding:2em;
+      transition:all 0.3s; position:relative; overflow:hidden;
+    }
+    .job-listing::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background:var(--jg,linear-gradient(90deg,#00BCD4,#26C6DA)); opacity:0; transition:opacity 0.3s;
+    }
+    .job-listing:hover { transform:translateY(-5px); border-color:rgba(255,255,255,0.16); box-shadow:0 20px 50px rgba(0,0,0,0.3); }
+    .job-listing:hover::before { opacity:1; }
+
+    .job-listing:nth-child(1){ --jg:linear-gradient(90deg,#00BCD4,#26C6DA); }
+    .job-listing:nth-child(2){ --jg:linear-gradient(90deg,#8B5CF6,#A78BFA); }
+    .job-listing:nth-child(3){ --jg:linear-gradient(90deg,#10B981,#34D399); }
+    .job-listing:nth-child(4){ --jg:linear-gradient(90deg,#F59E0B,#FCD34D); }
+    .job-listing:nth-child(5){ --jg:linear-gradient(90deg,#EC4899,#F472B6); }
+    .job-listing:nth-child(6){ --jg:linear-gradient(90deg,#0EA5E9,#38BDF8); }
+
+    .job-listing h4 { font-size:1.1em; font-weight:700; color:#fff; margin-bottom:0.5em; letter-spacing:-0.01em; }
+    .job-meta {
+      display:inline-flex; align-items:center; gap:0.4em;
+      font-size:0.74em; font-weight:600; color:rgba(255,255,255,0.4);
+      background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08);
+      border-radius:999px; padding:0.25em 0.8em; margin-bottom:1em;
+    }
+    .job-listing p { font-size:0.87em; color:rgba(255,255,255,0.5); line-height:1.75; margin-bottom:1.5em; }
+    .apply-btn {
+      display:inline-flex; align-items:center; gap:0.4em;
+      font-size:0.82em; font-weight:700; color:#00BCD4;
+      border:1px solid rgba(0,188,212,0.3); border-radius:8px;
+      padding:0.5em 1.1em; transition:all 0.2s;
+    }
+    .apply-btn:hover { background:rgba(0,188,212,0.1); border-color:#00BCD4; }
+
+    .more-info { text-align:center; margin-top:3em; color:rgba(255,255,255,0.4); font-size:0.92em; }
+    .more-info a { color:#00BCD4; }
+    .more-info a:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+  <header class="main-header" id="main-header">
+    <div class="container header-inner">
+      <div class="logo">
+        <img src="images/onco-ally-logo.png" alt="Onco-Ally Logo" class="logo-img">
+        <h1>Onco-Ally</h1>
+      </div>
+      <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span></button>
+      <nav id="site-nav" class="site-nav"><ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="forpatients.html">For Patients</a></li>
+        <li><a href="forproviders.html">For Providers</a></li>
+        <li><a href="forpartners.html">For Partners</a></li>
+        <li><a href="careers.html" class="active">Careers</a></li>
+        <li><a href="leadership.html">Leadership</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="rnd.html">MIT Learnings</a></li>
+      </ul></nav>
+      <div class="header-actions">
+        <a href="login.html" class="button-signin">Login</a>
+        <a href="signup.html" class="button-signup">Sign Up</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="page-hero">
+    <div class="container page-hero-content fade-in">
+      <span class="section-eyebrow">We're Hiring</span>
+      <h2>Join Our Team</h2>
+      <p>Help us transform cancer care through technology, compassion, and innovation. We're building something that matters.</p>
+    </div>
+  </section>
+
+  <main class="careers-main">
+    <div class="container">
+      <!-- Culture -->
+      <div class="reveal" style="text-align:center; margin-bottom:3em;">
+        <span class="section-eyebrow">Why Onco-Ally</span>
+        <h2 class="section-title">Our Culture</h2>
+      </div>
+      <div class="culture-grid">
+        <div class="culture-card reveal"><ion-icon name="flask-outline"></ion-icon><h4>Meaningful Work</h4><p>Every line of code, every design decision directly impacts real cancer patients.</p></div>
+        <div class="culture-card reveal" style="transition-delay:0.08s"><ion-icon name="people-outline"></ion-icon><h4>Great Team</h4><p>MIT professionals, clinicians, and engineers united by one mission.</p></div>
+        <div class="culture-card reveal" style="transition-delay:0.16s"><ion-icon name="rocket-outline"></ion-icon><h4>Fast Growth</h4><p>A startup environment where your contributions are seen and celebrated.</p></div>
+        <div class="culture-card reveal" style="transition-delay:0.24s"><ion-icon name="globe-outline"></ion-icon><h4>Global Impact</h4><p>We operate across 6 cities worldwide — Boston, Mumbai, Vienna, and more.</p></div>
+      </div>
+
+      <!-- Open Roles -->
+      <div class="jobs-header reveal">
+        <span class="section-eyebrow">Open Positions</span>
+        <h2 class="section-title">Current Openings</h2>
+      </div>
+      <div class="jobs-grid">
+        <div class="job-listing reveal">
+          <h4>Senior Software Engineer</h4>
+          <div class="job-meta"><ion-icon name="location-outline"></ion-icon> Boston, MA &nbsp;·&nbsp; Full-Time</div>
+          <p>Lead the development of our advanced healthcare platform. Collaborate with cross-functional teams to build robust, scalable solutions that drive personalized care.</p>
+          <a href="mailto:careers@oncoally.com" class="apply-btn"><ion-icon name="send-outline"></ion-icon> Apply Now</a>
+        </div>
+        <div class="job-listing reveal" style="transition-delay:0.08s">
+          <h4>Data Scientist</h4>
+          <div class="job-meta"><ion-icon name="location-outline"></ion-icon> Remote &nbsp;·&nbsp; Full-Time</div>
+          <p>Utilize cutting-edge AI and machine learning techniques to extract actionable insights from complex healthcare data and build our predictive models.</p>
+          <a href="mailto:careers@oncoally.com" class="apply-btn"><ion-icon name="send-outline"></ion-icon> Apply Now</a>
+        </div>
+        <div class="job-listing reveal" style="transition-delay:0.16s">
+          <h4>Product Manager</h4>
+          <div class="job-meta"><ion-icon name="location-outline"></ion-icon> Denver, CO &nbsp;·&nbsp; Full-Time</div>
+          <p>Oversee product development from ideation to launch. Work closely with engineering and clinical teams to define and enhance platform features.</p>
+          <a href="mailto:careers@oncoally.com" class="apply-btn"><ion-icon name="send-outline"></ion-icon> Apply Now</a>
+        </div>
+        <div class="job-listing reveal" style="transition-delay:0.24s">
+          <h4>UX/UI Designer</h4>
+          <div class="job-meta"><ion-icon name="location-outline"></ion-icon> Remote &nbsp;·&nbsp; Full-Time</div>
+          <p>Design intuitive, beautiful user interfaces that enhance the digital patient and provider experience across web and mobile.</p>
+          <a href="mailto:careers@oncoally.com" class="apply-btn"><ion-icon name="send-outline"></ion-icon> Apply Now</a>
+        </div>
+        <div class="job-listing reveal" style="transition-delay:0.32s">
+          <h4>Clinical Research Specialist</h4>
+          <div class="job-meta"><ion-icon name="location-outline"></ion-icon> Boston, MA &nbsp;·&nbsp; Full-Time</div>
+          <p>Drive clinical studies and research initiatives to continuously improve our treatment recommendations and validate AI model outcomes.</p>
+          <a href="mailto:careers@oncoally.com" class="apply-btn"><ion-icon name="send-outline"></ion-icon> Apply Now</a>
+        </div>
+        <div class="job-listing reveal" style="transition-delay:0.4s">
+          <h4>Marketing Manager</h4>
+          <div class="job-meta"><ion-icon name="location-outline"></ion-icon> New York, NY &nbsp;·&nbsp; Full-Time</div>
+          <p>Develop and execute strategic marketing campaigns to enhance brand awareness and drive patient and provider engagement at scale.</p>
+          <a href="mailto:careers@oncoally.com" class="apply-btn"><ion-icon name="send-outline"></ion-icon> Apply Now</a>
+        </div>
+      </div>
+
+      <p class="more-info reveal">
+        Don't see your role? Send your resume to <a href="mailto:careers@oncoally.com">careers@oncoally.com</a> — we're always looking for exceptional people.
+      </p>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div class="footer-brand"><img src="images/onco-ally-logo.png" alt="" style="width:24px;height:24px;border-radius:6px;opacity:0.7;"> &copy; 2026 Onco-Ally — MIT CTO Impact Project</div>
+      <div class="footer-links"><a href="index.html">Home</a><a href="rnd.html">MIT Learnings</a><a href="contact.html">Contact</a></div>
+    </div>
+  </footer>
+  <script>
+    window.addEventListener('scroll', () => { document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 60); });
+    const obs = new IntersectionObserver(e => e.forEach(en => { if(en.isIntersecting){ en.target.classList.add('visible'); obs.unobserve(en.target); }}), {threshold:0.1});
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>

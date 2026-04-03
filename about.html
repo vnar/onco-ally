@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>About Onco-Ally — Because No One Fights Alone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .page-hero {
+      position: relative;
+      padding: 6em 0 4em;
+      text-align: center;
+      background: linear-gradient(135deg, #050d1f 0%, #0a1a3a 50%, #0d2a5e 100%);
+      overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 60%, rgba(0,188,212,0.1) 0%, transparent 60%);
+    }
+    .page-hero-content { position: relative; z-index: 1; }
+    .page-hero h2 {
+      font-size: clamp(2.2em, 5vw, 3.5em);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.4em;
+    }
+    .page-hero p {
+      color: rgba(255,255,255,0.55);
+      font-size: 1.1em;
+    }
+
+    .content-section { padding: 5em 0; }
+    .content-block { max-width: 800px; margin: 0 auto 4em; }
+    .content-block h3 {
+      font-size: 1.5em;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75em;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+    }
+    .content-block h3 ion-icon { color: #00BCD4; font-size: 1.1em; }
+    .content-block p {
+      color: rgba(255,255,255,0.6);
+      font-size: 1em;
+      line-height: 1.85;
+    }
+    .content-block strong { color: rgba(255,255,255,0.85); }
+    .content-block em { color: #00BCD4; font-style: normal; }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.25em;
+      margin-top: 1.5em;
+    }
+    .value-item {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 1.75em 1.5em;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    .value-item:hover {
+      border-color: rgba(0,188,212,0.3);
+      transform: translateY(-4px);
+      background: rgba(0,188,212,0.05);
+    }
+    .value-item ion-icon {
+      font-size: 2em;
+      color: #00BCD4;
+      display: block;
+      margin-bottom: 0.6em;
+      filter: drop-shadow(0 0 10px rgba(0,188,212,0.4));
+    }
+    .value-item h4 { font-size: 1em; font-weight: 700; color: #fff; margin-bottom: 0.4em; }
+    .value-item p { font-size: 0.84em; color: rgba(255,255,255,0.5); line-height: 1.6; }
+
+    .journey-map-section {
+      padding: 5em 0;
+      background: rgba(255,255,255,0.02);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      text-align: center;
+    }
+    .journey-map-section h3 {
+      font-size: 1.6em;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5em;
+    }
+    .journey-map-section .section-eyebrow { margin-bottom: 0.75em; display: block; }
+    .journey-map {
+      max-width: 900px;
+      width: 100%;
+      border-radius: 20px;
+      margin: 2em auto;
+      display: block;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .journey-text {
+      color: rgba(255,255,255,0.55);
+      max-width: 700px;
+      margin: 0 auto 1em;
+      font-size: 0.97em;
+      line-height: 1.8;
+    }
+    .journey-highlight {
+      display: inline-block;
+      background: linear-gradient(135deg, rgba(0,188,212,0.12) 0%, rgba(13,71,161,0.15) 100%);
+      border: 1px solid rgba(0,188,212,0.25);
+      border-radius: 10px;
+      padding: 0.75em 2em;
+      color: #00BCD4;
+      font-weight: 600;
+      font-size: 0.95em;
+    }
+  </style>
+</head>
+<body>
+  <header class="main-header" id="main-header">
+    <div class="container header-inner">
+      <div class="logo">
+        <img src="images/onco-ally-logo.png" alt="Onco-Ally Logo" class="logo-img">
+        <h1>Onco-Ally</h1>
+      </div>
+      <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span></button>
+      <nav id="site-nav" class="site-nav"><ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html" class="active">About Us</a></li>
+        <li><a href="forpatients.html">For Patients</a></li>
+        <li><a href="forproviders.html">For Providers</a></li>
+        <li><a href="forpartners.html">For Partners</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="leadership.html">Leadership</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="rnd.html">MIT Learnings</a></li>
+      </ul></nav>
+      <div class="header-actions">
+        <a href="login.html" class="button-signin">Login</a>
+        <a href="signup.html" class="button-signup">Sign Up</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="page-hero">
+    <div class="container page-hero-content fade-in">
+      <span class="section-eyebrow">MIT CTO Impact Project</span>
+      <h2>About Onco-Ally</h2>
+      <p>Because No One Fights Alone</p>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+      <div class="content-block reveal">
+        <h3><ion-icon name="book-outline"></ion-icon> Our Story</h3>
+        <p>
+          At <strong>Onco-Ally</strong>, we believe that <em>no one should face cancer alone</em>. Our journey began with a single conviction:
+          cancer care must go beyond clinical treatments to address every facet of a patient's life. Too often, individuals are overwhelmed by
+          fragmented systems, complex regimens, and a lack of real-time support. We knew there had to be a better way.
+        </p>
+        <p style="margin-top:1em;">
+          Born out of MIT's rigorous academic environment, Onco-Ally is a convergence of systems engineering, machine learning research,
+          and deep human empathy. Every feature, every decision, every line of code is guided by one question: does this help a patient or provider?
+        </p>
+      </div>
+
+      <div class="content-block reveal">
+        <h3><ion-icon name="diamond-outline"></ion-icon> Our Values</h3>
+        <div class="values-grid">
+          <div class="value-item">
+            <ion-icon name="rocket-outline"></ion-icon>
+            <h4>Innovation</h4>
+            <p>Leveraging cutting-edge technology to redefine oncology care.</p>
+          </div>
+          <div class="value-item">
+            <ion-icon name="accessibility-outline"></ion-icon>
+            <h4>Accessibility</h4>
+            <p>Making personalized care available to everyone, everywhere.</p>
+          </div>
+          <div class="value-item">
+            <ion-icon name="heart-outline"></ion-icon>
+            <h4>Compassion</h4>
+            <p>Putting empathy at the forefront of every decision.</p>
+          </div>
+          <div class="value-item">
+            <ion-icon name="shield-checkmark-outline"></ion-icon>
+            <h4>Integrity</h4>
+            <p>Building trust with transparent, data-driven solutions.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-block reveal">
+        <h3><ion-icon name="telescope-outline"></ion-icon> Our Vision</h3>
+        <p>
+          We are on a mission to ensure that <strong>no one fights alone</strong>. By uniting advanced AI analytics, wearable technology, and strategic partnerships,
+          we are closing the gaps in remote care and empowering providers with real-time insights. Our vision is a future where every patient receives personalized,
+          compassionate care — and every provider has the tools to deliver it. Together, we build a unified network that transforms cancer care worldwide.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="journey-map-section">
+    <div class="container">
+      <span class="section-eyebrow reveal">Patient-Centered Design</span>
+      <h3 class="reveal">Patient Journey Map</h3>
+      <img src="images/patient-journey-map.png" alt="Patient Journey Map" class="journey-map reveal">
+      <p class="journey-text reveal">
+        In a bold move led by MIT professionals, Onco-Ally has reimagined the patient journey. Our innovative approach streamlines the entire
+        treatment experience — from diagnosis through follow-up — delivering real-time insights and personalized care.
+      </p>
+      <p class="reveal"><span class="journey-highlight">A Bold Move from MIT Professionals to Solve a Critical Problem in Cancer Care.</span></p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <img src="images/onco-ally-logo.png" alt="" style="width:24px;height:24px;border-radius:6px;opacity:0.7;">
+        &copy; 2026 Onco-Ally — MIT CTO Impact Project
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a><a href="rnd.html">MIT Learnings</a><a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    window.addEventListener('scroll', () => {
+      document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 60);
+    });
+    const obs = new IntersectionObserver(e => e.forEach(en => { if(en.isIntersecting){ en.target.classList.add('visible'); obs.unobserve(en.target); }}), {threshold:0.1});
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>

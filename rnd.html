@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MIT Learnings | Onco-Ally</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MIT CTO Impact Project — follow Onco-Ally's learnings from framing the problem to deploying on the cloud. MIT-grade research in oncology AI.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Ionicons -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    /* ============================================================
+       MIT LEARNINGS PAGE — EXCLUSIVE STYLES
+       ============================================================ */
+
+    /* ---- Hero ---- */
+    .rnd-hero {
+      position: relative;
+      padding: 6em 0 4em;
+      overflow: hidden;
+      background: linear-gradient(135deg, #050d1f 0%, #0a1a3a 40%, #0d2a5e 100%);
+      text-align: center;
+    }
+
+    .rnd-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 30% 50%, rgba(0,188,212,0.14) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 30%, rgba(124,58,237,0.1) 0%, transparent 50%);
+    }
+
+    .rnd-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse at center, black 20%, transparent 80%);
+    }
+
+    .rnd-hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .rnd-hero .mit-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5em;
+      background: rgba(163,31,52,0.15);
+      border: 1px solid rgba(163,31,52,0.35);
+      color: #ff6b6b;
+      font-size: 0.72em;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.35em 1em;
+      border-radius: 9999px;
+      margin-bottom: 1.2em;
+    }
+
+    .rnd-hero h1 {
+      font-size: clamp(2.2em, 5vw, 3.8em);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 0.6em;
+    }
+
+    .rnd-hero h1 span {
+      background: linear-gradient(135deg, #00BCD4 0%, #80DEEA 50%, #B2EBF2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .rnd-hero p {
+      font-size: 1.1em;
+      color: rgba(255,255,255,0.6);
+      max-width: 560px;
+      margin: 0 auto 2.5em;
+      line-height: 1.75;
+    }
+
+    /* ---- Journey Pipeline Bar ---- */
+    .pipeline-bar {
+      background: rgba(255,255,255,0.03);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 1.5em 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .pipeline-steps {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      min-width: 700px;
+      padding: 0 2em;
+    }
+
+    .pipeline-step {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      cursor: pointer;
+    }
+
+    .step-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4em;
+      padding: 0 1.2em;
+      transition: all 0.25s ease;
+    }
+
+    .step-node:hover .step-circle {
+      border-color: var(--step-color);
+      background: rgba(var(--step-rgb), 0.15);
+      transform: scale(1.1);
+    }
+
+    .step-circle {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7em;
+      font-weight: 700;
+      color: rgba(255,255,255,0.5);
+      transition: all 0.25s ease;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .step-circle.active {
+      border-color: var(--step-color);
+      background: rgba(var(--step-rgb), 0.2);
+      color: var(--step-color);
+      box-shadow: 0 0 16px rgba(var(--step-rgb), 0.4);
+    }
+
+    .step-label {
+      font-size: 0.68em;
+      font-weight: 600;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    .step-connector {
+      height: 2px;
+      width: 40px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+      flex-shrink: 0;
+    }
+
+    .step-connector.lit {
+      background: linear-gradient(90deg, var(--from-color), var(--to-color));
+      opacity: 0.4;
+    }
+
+    /* ---- Grid Header ---- */
+    .rnd-grid-section {
+      padding: 5em 0 6em;
+    }
+
+    .rnd-grid-header {
+      text-align: center;
+      margin-bottom: 3.5em;
+    }
+
+    .rnd-grid-header .section-eyebrow {
+      margin-bottom: 0.75em;
+      display: block;
+    }
+
+    .rnd-grid-header h2 {
+      font-size: clamp(1.6em, 3vw, 2.3em);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5em;
+    }
+
+    .rnd-grid-header p {
+      color: rgba(255,255,255,0.5);
+      font-size: 0.97em;
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.75;
+    }
+
+    /* ---- Cards Grid ---- */
+    .rnd-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5em;
+    }
+
+    /* ---- Individual Journey Card ---- */
+    .journey-card {
+      position: relative;
+      border-radius: 22px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), box-shadow 0.35s ease;
+      background: linear-gradient(145deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
+      border: 1px solid rgba(255,255,255,0.08);
+      group: true;
+    }
+
+    .journey-card:hover {
+      transform: translateY(-8px) scale(1.01);
+      box-shadow: 0 30px 70px rgba(0,0,0,0.45);
+      border-color: rgba(255,255,255,0.15);
+    }
+
+    /* Accent top border */
+    .journey-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--card-gradient);
+      z-index: 2;
+    }
+
+    /* Subtle glow on hover */
+    .journey-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 0%, rgba(var(--card-rgb), 0.08) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .journey-card:hover::after {
+      opacity: 1;
+    }
+
+    /* Card body */
+    .card-body {
+      padding: 2em 2em 1.75em;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Stage pill */
+    .stage-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4em;
+      font-size: 0.68em;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3em 0.8em;
+      border-radius: 9999px;
+      margin-bottom: 1.2em;
+      background: rgba(var(--card-rgb), 0.12);
+      border: 1px solid rgba(var(--card-rgb), 0.25);
+      color: var(--card-accent);
+    }
+
+    .stage-num {
+      width: 18px; height: 18px;
+      background: rgba(var(--card-rgb), 0.25);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8em;
+      font-weight: 800;
+    }
+
+    /* Card icon */
+    .card-icon {
+      width: 58px; height: 58px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.7em;
+      margin-bottom: 1.2em;
+      background: rgba(var(--card-rgb), 0.12);
+      color: var(--card-accent);
+      transition: all 0.3s ease;
+    }
+
+    .journey-card:hover .card-icon {
+      background: rgba(var(--card-rgb), 0.2);
+      transform: scale(1.08);
+      box-shadow: 0 0 24px rgba(var(--card-rgb), 0.3);
+    }
+
+    /* Card text */
+    .card-title {
+      font-size: 1.15em;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.015em;
+      margin-bottom: 0.6em;
+      line-height: 1.3;
+    }
+
+    .card-desc {
+      font-size: 0.86em;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.75;
+      margin-bottom: 1.5em;
+    }
+
+    /* Tags */
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4em;
+      margin-bottom: 1.5em;
+    }
+
+    .card-tag {
+      font-size: 0.68em;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 6px;
+      padding: 0.2em 0.6em;
+    }
+
+    /* CTA row */
+    .card-cta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding-top: 1.2em;
+    }
+
+    .card-explore-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5em;
+      font-size: 0.82em;
+      font-weight: 700;
+      color: var(--card-accent);
+      letter-spacing: 0.03em;
+      transition: gap 0.2s ease;
+    }
+
+    .card-explore-btn ion-icon {
+      transition: transform 0.25s ease;
+    }
+
+    .journey-card:hover .card-explore-btn ion-icon {
+      transform: translateX(4px);
+    }
+
+    .card-pdf-size {
+      font-size: 0.72em;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.04em;
+    }
+
+    /* Large card (spans 2 cols) — for special items */
+    .journey-card.wide {
+      grid-column: span 2;
+    }
+
+    /* Color themes per card */
+    .card-0 { --card-gradient: linear-gradient(90deg, #EF4444, #F87171); --card-rgb: 239,68,68; --card-accent: #F87171; }
+    .card-1 { --card-gradient: linear-gradient(90deg, #8B5CF6, #A78BFA); --card-rgb: 139,92,246; --card-accent: #A78BFA; }
+    .card-2 { --card-gradient: linear-gradient(90deg, #0EA5E9, #38BDF8); --card-rgb: 14,165,233; --card-accent: #38BDF8; }
+    .card-3 { --card-gradient: linear-gradient(90deg, #10B981, #34D399); --card-rgb: 16,185,129; --card-accent: #34D399; }
+    .card-4 { --card-gradient: linear-gradient(90deg, #F59E0B, #FCD34D); --card-rgb: 245,158,11; --card-accent: #FCD34D; }
+    .card-5 { --card-gradient: linear-gradient(90deg, #EC4899, #F472B6); --card-rgb: 236,72,153; --card-accent: #F472B6; }
+    .card-6 { --card-gradient: linear-gradient(90deg, #00BCD4, #26C6DA); --card-rgb: 0,188,212; --card-accent: #26C6DA; }
+
+    /* ============================================================
+       MODAL PDF VIEWER
+       ============================================================ */
+    .pdf-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5em;
+      animation: fadeInOverlay 0.25s ease;
+    }
+
+    .pdf-modal-overlay.open {
+      display: flex;
+    }
+
+    @keyframes fadeInOverlay {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .pdf-modal {
+      background: #0f1a35;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 24px;
+      width: 100%;
+      max-width: 1000px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+      animation: slideUpModal 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    @keyframes slideUpModal {
+      from { opacity: 0; transform: translateY(30px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .pdf-modal-header {
+      padding: 1.25em 1.75em;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1em;
+      flex-shrink: 0;
+    }
+
+    .pdf-modal-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.75em;
+    }
+
+    .pdf-modal-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2em;
+    }
+
+    .pdf-modal-title {
+      font-size: 1em;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.01em;
+    }
+
+    .pdf-modal-subtitle {
+      font-size: 0.75em;
+      color: rgba(255,255,255,0.4);
+      margin-top: 0.1em;
+    }
+
+    .pdf-modal-actions {
+      display: flex;
+      gap: 0.5em;
+      align-items: center;
+    }
+
+    .pdf-download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4em;
+      font-size: 0.8em;
+      font-weight: 600;
+      color: rgba(255,255,255,0.7);
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px;
+      padding: 0.45em 0.9em;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .pdf-download-btn:hover {
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+    }
+
+    .pdf-close-btn {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
+      color: rgba(255,255,255,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.2em;
+      transition: all 0.2s ease;
+    }
+
+    .pdf-close-btn:hover {
+      background: rgba(239,68,68,0.15);
+      border-color: rgba(239,68,68,0.3);
+      color: #F87171;
+    }
+
+    .pdf-modal-body {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .pdf-modal-body iframe {
+      width: 100%;
+      height: 100%;
+      min-height: 65vh;
+      border: none;
+      display: block;
+    }
+
+    .pdf-modal-footer {
+      padding: 0.85em 1.75em;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .pdf-stage-progress {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+    }
+
+    .progress-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .progress-dot.active {
+      background: var(--accent-color, #00BCD4);
+      width: 24px;
+      border-radius: 4px;
+    }
+
+    .pdf-nav-btns {
+      display: flex;
+      gap: 0.5em;
+    }
+
+    .pdf-nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4em;
+      font-size: 0.8em;
+      font-weight: 600;
+      color: rgba(255,255,255,0.55);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 0.4em 0.9em;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .pdf-nav-btn:hover:not(:disabled) {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+    }
+
+    .pdf-nav-btn:disabled {
+      opacity: 0.3;
+      cursor: default;
+    }
+
+    /* ---- Bottom journey path ---- */
+    .journey-path-section {
+      padding: 4em 0 6em;
+      text-align: center;
+      position: relative;
+    }
+
+    .journey-path-title {
+      font-size: 0.75em;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 2.5em;
+    }
+
+    .journey-path {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0;
+      position: relative;
+    }
+
+    .path-node {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .path-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6em;
+      padding: 0 0.5em;
+    }
+
+    .path-circle {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3em;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .path-circle::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      background: conic-gradient(var(--pc) 0%, transparent 0%);
+      opacity: 0.4;
+      transition: all 0.3s ease;
+    }
+
+    .path-step:hover .path-circle {
+      transform: scale(1.12);
+    }
+
+    .path-step:hover .path-circle::after {
+      opacity: 0.8;
+    }
+
+    .path-label {
+      font-size: 0.7em;
+      font-weight: 600;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    .path-arrow {
+      color: rgba(255,255,255,0.15);
+      font-size: 1em;
+      padding: 0 0.25em;
+      flex-shrink: 0;
+    }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 1024px) {
+      .rnd-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .journey-card.wide {
+        grid-column: span 1;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .rnd-cards-grid {
+        grid-template-columns: 1fr;
+      }
+      .pdf-modal {
+        border-radius: 16px;
+        max-height: 95vh;
+      }
+      .journey-path {
+        gap: 0.25em;
+      }
+      .path-circle {
+        width: 40px; height: 40px;
+        font-size: 1em;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .rnd-hero {
+        padding: clamp(3rem, 8vw, 4rem) 0 clamp(2rem, 5vw, 2.5rem);
+      }
+      .rnd-grid-section {
+        padding: 3rem 0 3.5rem;
+      }
+      .journey-card.card-6 > .card-body {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 1.25em !important;
+      }
+      .pipeline-steps {
+        min-width: 0;
+        flex-wrap: wrap;
+        justify-content: center;
+        row-gap: 0.75em;
+        padding: 0 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="main-header" id="main-header">
+    <div class="container header-inner">
+      <div class="logo">
+        <img src="images/onco-ally-logo.png" alt="Onco-Ally Logo" class="logo-img">
+        <h1>Onco-Ally</h1>
+      </div>
+      <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span></button>
+      <nav id="site-nav" class="site-nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="forpatients.html">For Patients</a></li>
+          <li><a href="forproviders.html">For Providers</a></li>
+          <li><a href="forpartners.html">For Partners</a></li>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="leadership.html">Leadership</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="rnd.html" class="active">MIT Learnings</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <a href="login.html" class="button-signin">Login</a>
+        <a href="signup.html" class="button-signup">Sign Up</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MIT LEARNINGS HERO -->
+  <section class="rnd-hero">
+    <div class="container rnd-hero-content">
+      <div class="fade-in">
+        <div class="mit-label">
+          <ion-icon name="school-outline"></ion-icon>
+          MIT CTO Impact Project
+        </div>
+      </div>
+      <h1 class="fade-in delay-1">
+        From <span>Concept</span> to<br>the <span>Cloud</span>
+      </h1>
+      <p class="fade-in delay-2">
+        Seven chapters of MIT Learnings — exploring the problem, building the vision, mapping the architecture, and deploying a scalable oncology AI platform.
+      </p>
+
+      <!-- Journey pipeline inline in hero -->
+      <div class="fade-in delay-3" style="display:flex; justify-content:center; gap:1em; flex-wrap:wrap; margin-top:0.5em;">
+        <div style="display:flex; align-items:center; gap:0.5em; font-size:0.8em; color:rgba(255,255,255,0.5);">
+          <ion-icon name="document-text-outline" style="color:#F87171;"></ion-icon> Problem Definition
+        </div>
+        <div style="color:rgba(255,255,255,0.2); font-size:0.8em;">→</div>
+        <div style="display:flex; align-items:center; gap:0.5em; font-size:0.8em; color:rgba(255,255,255,0.5);">
+          <ion-icon name="eye-outline" style="color:#A78BFA;"></ion-icon> Vision
+        </div>
+        <div style="color:rgba(255,255,255,0.2); font-size:0.8em;">→</div>
+        <div style="display:flex; align-items:center; gap:0.5em; font-size:0.8em; color:rgba(255,255,255,0.5);">
+          <ion-icon name="map-outline" style="color:#38BDF8;"></ion-icon> Roadmap
+        </div>
+        <div style="color:rgba(255,255,255,0.2); font-size:0.8em;">→</div>
+        <div style="display:flex; align-items:center; gap:0.5em; font-size:0.8em; color:rgba(255,255,255,0.5);">
+          <ion-icon name="git-network-outline" style="color:#34D399;"></ion-icon> Architecture
+        </div>
+        <div style="color:rgba(255,255,255,0.2); font-size:0.8em;">→</div>
+        <div style="display:flex; align-items:center; gap:0.5em; font-size:0.8em; color:rgba(255,255,255,0.5);">
+          <ion-icon name="cpu-outline" style="color:#FCD34D;"></ion-icon> ML
+        </div>
+        <div style="color:rgba(255,255,255,0.2); font-size:0.8em;">→</div>
+        <div style="display:flex; align-items:center; gap:0.5em; font-size:0.8em; color:rgba(255,255,255,0.5);">
+          <ion-icon name="cloud-outline" style="color:#26C6DA;"></ion-icon> Cloud
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CARDS GRID SECTION -->
+  <section class="rnd-grid-section">
+    <div class="container">
+      <div class="rnd-grid-header reveal">
+        <span class="section-eyebrow">The Learning Journey</span>
+        <h2>7 Modules. One Vision.</h2>
+        <p>Click any tile to explore the full research document — each module is a milestone in our journey from an idea to a world-class oncology platform.</p>
+      </div>
+
+      <div class="rnd-cards-grid">
+
+        <!-- CARD 1: Frame the Problem -->
+        <div class="journey-card card-0 reveal" onclick="openModal(0)" tabindex="0" role="button" aria-label="Open Frame the Problem document">
+          <div class="card-body">
+            <div class="stage-pill">
+              <span class="stage-num">01</span>
+              Discovery
+            </div>
+            <div class="card-icon">
+              <ion-icon name="search-outline"></ion-icon>
+            </div>
+            <div class="card-title">Frame the Problem</div>
+            <div class="card-desc">
+              Uncover the critical gaps in today's oncology care — fragmented systems, communication barriers, and the urgent need for a unified solution.
+            </div>
+            <div class="card-tags">
+              <span class="card-tag">Problem Space</span>
+              <span class="card-tag">Stakeholder Analysis</span>
+              <span class="card-tag">Need Finding</span>
+            </div>
+            <div class="card-cta">
+              <span class="card-explore-btn">
+                Explore Module <ion-icon name="arrow-forward-outline"></ion-icon>
+              </span>
+              <span class="card-pdf-size">PDF</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 2: Build Your Vision -->
+        <div class="journey-card card-1 reveal" style="transition-delay:0.08s" onclick="openModal(1)" tabindex="0" role="button" aria-label="Open Build Vision document">
+          <div class="card-body">
+            <div class="stage-pill">
+              <span class="stage-num">02</span>
+              Vision
+            </div>
+            <div class="card-icon">
+              <ion-icon name="telescope-outline"></ion-icon>
+            </div>
+            <div class="card-title">Build Your Vision</div>
+            <div class="card-desc">
+              A bold vision for the future of cancer care — articulating the "why" behind Onco-Ally and setting the north star for every design decision.
+            </div>
+            <div class="card-tags">
+              <span class="card-tag">Mission</span>
+              <span class="card-tag">North Star</span>
+              <span class="card-tag">Strategic Goals</span>
+            </div>
+            <div class="card-cta">
+              <span class="card-explore-btn">
+                Explore Module <ion-icon name="arrow-forward-outline"></ion-icon>
+              </span>
+              <span class="card-pdf-size">PDF</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 3: Roadmap — WIDE -->
+        <div class="journey-card card-2 wide reveal" style="transition-delay:0.16s" onclick="openModal(2)" tabindex="0" role="button" aria-label="Open Roadmap document">
+          <div class="card-body">
+            <div class="stage-pill">
+              <span class="stage-num">03</span>
+              Strategy
+            </div>
+            <div class="card-icon">
+              <ion-icon name="map-outline"></ion-icon>
+            </div>
+            <div class="card-title">Onco-Ally Roadmap</div>
+            <div class="card-desc">
+              The strategic blueprint — detailing phased development from MVP to full-scale deployment. Every milestone, dependency, and decision point mapped out so the team moves with clarity and confidence.
+            </div>
+            <div class="card-tags">
+              <span class="card-tag">Phase Planning</span>
+              <span class="card-tag">Milestones</span>
+              <span class="card-tag">Go-to-Market</span>
+              <span class="card-tag">Timeline</span>
+            </div>
+            <div class="card-cta">
+              <span class="card-explore-btn">
+                Explore Module <ion-icon name="arrow-forward-outline"></ion-icon>
+              </span>
+              <span class="card-pdf-size">PDF</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 4: OPM -->
+        <div class="journey-card card-3 reveal" style="transition-delay:0.24s" onclick="openModal(3)" tabindex="0" role="button" aria-label="Open OPM document">
+          <div class="card-body">
+            <div class="stage-pill">
+              <span class="stage-num">04</span>
+              Architecture
+            </div>
+            <div class="card-icon">
+              <ion-icon name="git-network-outline"></ion-icon>
+            </div>
+            <div class="card-title">Onco-Ally OPM</div>
+            <div class="card-desc">
+              Object-Process Methodology — a systems-engineering diagram visualizing how every component, process, and stakeholder interacts in the Onco-Ally ecosystem.
+            </div>
+            <div class="card-tags">
+              <span class="card-tag">Systems Thinking</span>
+              <span class="card-tag">OPM</span>
+              <span class="card-tag">Process Flow</span>
+            </div>
+            <div class="card-cta">
+              <span class="card-explore-btn">
+                Explore Module <ion-icon name="arrow-forward-outline"></ion-icon>
+              </span>
+              <span class="card-pdf-size">PDF</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 5: MIT Learnings Portfolio -->
+        <div class="journey-card card-4 reveal" style="transition-delay:0.32s" onclick="openModal(4)" tabindex="0" role="button" aria-label="Open MIT Learnings Portfolio document">
+          <div class="card-body">
+            <div class="stage-pill">
+              <span class="stage-num">05</span>
+              Portfolio
+            </div>
+            <div class="card-icon">
+              <ion-icon name="briefcase-outline"></ion-icon>
+            </div>
+            <div class="card-title">MIT Learnings Portfolio</div>
+            <div class="card-desc">
+              A comprehensive overview of research initiatives — from wearable integration studies to AI model validations — with measurable outcomes and ROI projections.
+            </div>
+            <div class="card-tags">
+              <span class="card-tag">Research Initiatives</span>
+              <span class="card-tag">ROI</span>
+              <span class="card-tag">Innovation Pipeline</span>
+            </div>
+            <div class="card-cta">
+              <span class="card-explore-btn">
+                Explore Module <ion-icon name="arrow-forward-outline"></ion-icon>
+              </span>
+              <span class="card-pdf-size">PDF</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 6: Machine Learning — WIDE -->
+        <div class="journey-card card-5 wide reveal" style="transition-delay:0.4s" onclick="openModal(5)" tabindex="0" role="button" aria-label="Open Machine Learning document">
+          <div class="card-body">
+            <div class="stage-pill">
+              <span class="stage-num">06</span>
+              Intelligence
+            </div>
+            <div class="card-icon">
+              <ion-icon name="hardware-chip-outline"></ion-icon>
+            </div>
+            <div class="card-title">Machine Learning</div>
+            <div class="card-desc">
+              The AI engine powering Onco-Ally — predictive models for treatment response, side-effect management, and outcome forecasting. Explore how we train, validate, and continuously improve models with real-world oncology data at the edge.
+            </div>
+            <div class="card-tags">
+              <span class="card-tag">Predictive Models</span>
+              <span class="card-tag">Deep Learning</span>
+              <span class="card-tag">Clinical Validation</span>
+              <span class="card-tag">Edge AI</span>
+            </div>
+            <div class="card-cta">
+              <span class="card-explore-btn">
+                Explore Module <ion-icon name="arrow-forward-outline"></ion-icon>
+              </span>
+              <span class="card-pdf-size">PDF</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 7: To the Cloud — FULL WIDTH SPECIAL -->
+        <div class="journey-card card-6 reveal" style="grid-column:1/-1; transition-delay:0.48s; background: linear-gradient(135deg, rgba(0,188,212,0.08) 0%, rgba(13,71,161,0.12) 100%); border-color: rgba(0,188,212,0.15);" onclick="openModal(6)" tabindex="0" role="button" aria-label="Open Onco-Ally to the Cloud document">
+          <div class="card-body" style="display:grid; grid-template-columns:1fr auto; gap:2em; align-items:start;">
+            <div>
+              <div class="stage-pill">
+                <span class="stage-num">07</span>
+                Deployment
+              </div>
+              <div class="card-title" style="font-size:1.5em; margin-bottom:0.5em;">Onco-Ally to the Cloud ☁️</div>
+              <div class="card-desc" style="max-width:600px; font-size:0.92em;">
+                The final frontier — bringing everything together on a HIPAA-compliant, auto-scaling cloud infrastructure. Microservices, Kubernetes, CI/CD pipelines, and real-time global availability. This is where concept becomes reality.
+              </div>
+              <div class="card-tags" style="margin-bottom:0;">
+                <span class="card-tag">AWS / GCP</span>
+                <span class="card-tag">Kubernetes</span>
+                <span class="card-tag">HIPAA Compliant</span>
+                <span class="card-tag">Microservices</span>
+                <span class="card-tag">99.99% Uptime</span>
+              </div>
+            </div>
+            <div style="display:flex; flex-direction:column; align-items:center; gap:1em; padding:1em 0;">
+              <div class="card-icon" style="width:80px;height:80px;font-size:2.5em;border-radius:20px; background:rgba(0,188,212,0.15); color:#26C6DA; margin:0;">
+                <ion-icon name="cloud-outline"></ion-icon>
+              </div>
+              <span class="card-explore-btn" style="font-size:0.9em; white-space:nowrap;">
+                Launch Module <ion-icon name="arrow-forward-outline"></ion-icon>
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /rnd-cards-grid -->
+    </div>
+  </section>
+
+  <!-- JOURNEY PATH VISUALIZATION -->
+  <div class="section-divider"></div>
+  <section class="journey-path-section">
+    <div class="container">
+      <div class="journey-path-title reveal">The complete concept-to-cloud journey</div>
+      <div class="journey-path reveal" style="transition-delay:0.1s">
+
+        <div class="path-node">
+          <div class="path-step" onclick="openModal(0)" title="Frame the Problem" style="cursor:pointer;">
+            <div class="path-circle" style="background:rgba(239,68,68,0.15); color:#F87171; --pc:#F87171;">
+              <ion-icon name="search-outline"></ion-icon>
+            </div>
+            <span class="path-label">Problem</span>
+          </div>
+          <div class="path-arrow">→</div>
+        </div>
+
+        <div class="path-node">
+          <div class="path-step" onclick="openModal(1)" title="Build Your Vision" style="cursor:pointer;">
+            <div class="path-circle" style="background:rgba(139,92,246,0.15); color:#A78BFA; --pc:#A78BFA;">
+              <ion-icon name="telescope-outline"></ion-icon>
+            </div>
+            <span class="path-label">Vision</span>
+          </div>
+          <div class="path-arrow">→</div>
+        </div>
+
+        <div class="path-node">
+          <div class="path-step" onclick="openModal(2)" title="Roadmap" style="cursor:pointer;">
+            <div class="path-circle" style="background:rgba(14,165,233,0.15); color:#38BDF8; --pc:#38BDF8;">
+              <ion-icon name="map-outline"></ion-icon>
+            </div>
+            <span class="path-label">Roadmap</span>
+          </div>
+          <div class="path-arrow">→</div>
+        </div>
+
+        <div class="path-node">
+          <div class="path-step" onclick="openModal(3)" title="OPM" style="cursor:pointer;">
+            <div class="path-circle" style="background:rgba(16,185,129,0.15); color:#34D399; --pc:#34D399;">
+              <ion-icon name="git-network-outline"></ion-icon>
+            </div>
+            <span class="path-label">Architecture</span>
+          </div>
+          <div class="path-arrow">→</div>
+        </div>
+
+        <div class="path-node">
+          <div class="path-step" onclick="openModal(4)" title="MIT Learnings Portfolio" style="cursor:pointer;">
+            <div class="path-circle" style="background:rgba(245,158,11,0.15); color:#FCD34D; --pc:#FCD34D;">
+              <ion-icon name="briefcase-outline"></ion-icon>
+            </div>
+            <span class="path-label">Portfolio</span>
+          </div>
+          <div class="path-arrow">→</div>
+        </div>
+
+        <div class="path-node">
+          <div class="path-step" onclick="openModal(5)" title="Machine Learning" style="cursor:pointer;">
+            <div class="path-circle" style="background:rgba(236,72,153,0.15); color:#F472B6; --pc:#F472B6;">
+              <ion-icon name="hardware-chip-outline"></ion-icon>
+            </div>
+            <span class="path-label">ML / AI</span>
+          </div>
+          <div class="path-arrow">→</div>
+        </div>
+
+        <div class="path-node">
+          <div class="path-step" onclick="openModal(6)" title="Onco-Ally to the Cloud" style="cursor:pointer;">
+            <div class="path-circle" style="background:rgba(0,188,212,0.2); color:#26C6DA; --pc:#26C6DA; box-shadow: 0 0 20px rgba(0,188,212,0.25);">
+              <ion-icon name="cloud-outline"></ion-icon>
+            </div>
+            <span class="path-label">Cloud</span>
+          </div>
+        </div>
+
+      </div><!-- /journey-path -->
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <img src="images/onco-ally-logo.png" alt="" style="width:24px; height:24px; border-radius:6px; opacity:0.7;">
+        &copy; 2026 Onco-Ally — MIT CTO Impact Project
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <p class="views">Views: <span id="viewsCount">0</span></p>
+    </div>
+  </footer>
+
+  <!-- PDF MODAL -->
+  <div class="pdf-modal-overlay" id="pdfModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="pdf-modal">
+      <div class="pdf-modal-header">
+        <div class="pdf-modal-title-wrap">
+          <div class="pdf-modal-icon" id="modalIcon"></div>
+          <div>
+            <div class="pdf-modal-title" id="modalTitle">Document</div>
+            <div class="pdf-modal-subtitle" id="modalSubtitle">MIT Learnings Module</div>
+          </div>
+        </div>
+        <div class="pdf-modal-actions">
+          <a href="#" class="pdf-download-btn" id="modalDownload" download>
+            <ion-icon name="download-outline"></ion-icon> Download
+          </a>
+          <button class="pdf-close-btn" onclick="closeModal()" aria-label="Close">
+            <ion-icon name="close-outline"></ion-icon>
+          </button>
+        </div>
+      </div>
+      <div class="pdf-modal-body">
+        <iframe id="pdfFrame" src="" title="PDF Document"></iframe>
+      </div>
+      <div class="pdf-modal-footer">
+        <div class="pdf-stage-progress" id="progressDots"></div>
+        <div class="pdf-nav-btns">
+          <button class="pdf-nav-btn" id="prevBtn" onclick="navigateModal(-1)">
+            <ion-icon name="chevron-back-outline"></ion-icon> Prev
+          </button>
+          <button class="pdf-nav-btn" id="nextBtn" onclick="navigateModal(1)">
+            Next <ion-icon name="chevron-forward-outline"></ion-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script>
+    // ---- Data ----
+    const modules = [
+      {
+        title: 'Frame the Problem',
+        subtitle: 'Module 01 — Discovery',
+        file: '0_Frame the Problem.pdf',
+        icon: 'search-outline',
+        color: '#F87171',
+        bg: 'rgba(239,68,68,0.12)'
+      },
+      {
+        title: 'Build Your Vision',
+        subtitle: 'Module 02 — Vision',
+        file: '1_BuildVision.pdf',
+        icon: 'telescope-outline',
+        color: '#A78BFA',
+        bg: 'rgba(139,92,246,0.12)'
+      },
+      {
+        title: 'Onco-Ally Roadmap',
+        subtitle: 'Module 03 — Strategy',
+        file: '2_ Onco-Ally_Roadmap.pdf',
+        icon: 'map-outline',
+        color: '#38BDF8',
+        bg: 'rgba(14,165,233,0.12)'
+      },
+      {
+        title: 'Onco-Ally OPM',
+        subtitle: 'Module 04 — Architecture',
+        file: '4_Onco-Ally OPM.pdf',
+        icon: 'git-network-outline',
+        color: '#34D399',
+        bg: 'rgba(16,185,129,0.12)'
+      },
+      {
+        title: 'MIT Learnings Portfolio',
+        subtitle: 'Module 05 — Portfolio',
+        file: '5_R&D Portfolio.pdf',
+        icon: 'briefcase-outline',
+        color: '#FCD34D',
+        bg: 'rgba(245,158,11,0.12)'
+      },
+      {
+        title: 'Machine Learning',
+        subtitle: 'Module 06 — Intelligence',
+        file: '6_Machine Learning .pdf',
+        icon: 'hardware-chip-outline',
+        color: '#F472B6',
+        bg: 'rgba(236,72,153,0.12)'
+      },
+      {
+        title: 'Onco-Ally to the Cloud',
+        subtitle: 'Module 07 — Deployment',
+        file: '7_Onco-Ally to the Cloud.pdf',
+        icon: 'cloud-outline',
+        color: '#26C6DA',
+        bg: 'rgba(0,188,212,0.12)'
+      }
+    ];
+
+    let currentIdx = 0;
+
+    function openModal(idx) {
+      currentIdx = idx;
+      renderModal();
+      document.getElementById('pdfModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('pdfModal').classList.remove('open');
+      document.body.style.overflow = '';
+      // Clear iframe to stop PDF loading
+      setTimeout(() => {
+        document.getElementById('pdfFrame').src = '';
+      }, 300);
+    }
+
+    function renderModal() {
+      const m = modules[currentIdx];
+      document.getElementById('modalTitle').textContent = m.title;
+      document.getElementById('modalSubtitle').textContent = m.subtitle;
+      document.getElementById('pdfFrame').src = m.file;
+      document.getElementById('modalDownload').href = m.file;
+
+      // Icon
+      const iconEl = document.getElementById('modalIcon');
+      iconEl.style.background = m.bg;
+      iconEl.style.color = m.color;
+      iconEl.innerHTML = `<ion-icon name="${m.icon}"></ion-icon>`;
+
+      // Nav buttons
+      document.getElementById('prevBtn').disabled = currentIdx === 0;
+      document.getElementById('nextBtn').disabled = currentIdx === modules.length - 1;
+
+      // Progress dots
+      const dots = document.getElementById('progressDots');
+      dots.innerHTML = modules.map((_, i) =>
+        `<div class="progress-dot ${i === currentIdx ? 'active' : ''}" onclick="openModal(${i})" title="${modules[i].title}" style="${i === currentIdx ? `--accent-color:${m.color}` : ''}"></div>`
+      ).join('');
+    }
+
+    function navigateModal(dir) {
+      const next = currentIdx + dir;
+      if (next >= 0 && next < modules.length) {
+        currentIdx = next;
+        renderModal();
+      }
+    }
+
+    // Close on overlay click
+    document.getElementById('pdfModal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeModal();
+      if (e.key === 'ArrowRight') navigateModal(1);
+      if (e.key === 'ArrowLeft') navigateModal(-1);
+    });
+
+    // Keyboard on cards
+    document.querySelectorAll('.journey-card').forEach(card => {
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          card.click();
+        }
+      });
+    });
+
+    // Page views
+    document.addEventListener('DOMContentLoaded', function () {
+      let count = localStorage.getItem('pageViews') || 0;
+      count = parseInt(count) + 1;
+      localStorage.setItem('pageViews', count);
+      document.getElementById('viewsCount').textContent = count;
+    });
+
+    // Header scroll
+    window.addEventListener('scroll', function () {
+      const header = document.getElementById('main-header');
+      if (window.scrollY > 60) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    reveals.forEach(el => observer.observe(el));
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
