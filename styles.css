@@ -425,13 +425,28 @@ nav ul li a.active,
 }
 
 .project-tagline-hero {
+  display: inline-block;
   font-size: clamp(0.72rem, 2.2vw, 0.88rem);
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.55);
+  color: #E53935;
+  text-decoration: none;
   margin-bottom: 0.9rem;
   line-height: 1.35;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.project-tagline-hero:hover {
+  color: #ff6b6b;
+  text-decoration: underline;
+}
+
+.project-tagline-hero:focus-visible {
+  color: #ff6b6b;
+  text-decoration: underline;
+  outline: 2px solid rgba(229, 57, 53, 0.5);
+  outline-offset: 3px;
 }
 
 .hero-badge {
@@ -880,6 +895,20 @@ footer {
   gap: 0.5em;
   color: rgba(255,255,255,0.6);
   font-weight: 600;
+}
+
+.footer-mit-cto-link {
+  color: #E53935;
+  text-decoration: none;
+  font-weight: 700;
+  transition: color 0.2s ease;
+}
+
+.footer-mit-cto-link:hover,
+.footer-mit-cto-link:focus-visible {
+  color: #ff6b6b;
+  text-decoration: underline;
+  outline: none;
 }
 
 .footer-links {
